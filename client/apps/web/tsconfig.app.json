@@ -22,7 +22,8 @@
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@workspace/ui/*": ["../../packages/ui/src/*"]
     }
   },
   "include": ["src"]
