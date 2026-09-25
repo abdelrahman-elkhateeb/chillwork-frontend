@@ -9,9 +9,9 @@ export type Device = {
   mobileLabel?: string
 }
 
-export type HeroStep = {
-  n: string
-  text: string
+export type HeroStat = {
+  value: string
+  label: string
 }
 
 /** A numbered/lettered marker on a technical drawing, with a dashed leader line. */
@@ -32,12 +32,29 @@ export type LeakCard = {
   mobileBody: string
 }
 
-export type FlowStep = {
-  n: string
+export type JobStepIllustration =
+  "intake" | "triage" | "dispatch" | "on-site" | "close"
+
+export type JobStep = {
+  n: number
+  stage: string
   title: string
-  mobileTitle?: string
   body: string
-  mobileBody: string
+  illustration: JobStepIllustration
+}
+
+export type AppRoleId = "customer" | "dispatcher" | "technician"
+
+export type AppRole = {
+  id: AppRoleId
+  role: string
+  title: string
+  summary: string
+}
+
+export type Capability = {
+  title: string
+  body: string
 }
 
 export type BillingCallout = {
@@ -51,36 +68,8 @@ export type InvoiceLine = {
   detail: string
   mobileDetail: string
   amount: string
-  /** Not billed — shown struck through and faded. */
-  dropped?: boolean
-}
-
-export type DayBoardSlotKind = "job" | "free" | "blocked"
-
-export type DayBoardSlot = {
-  kind: DayBoardSlotKind
-  /** Relative width (flex-grow). */
-  span: number
-  label?: string
-}
-
-export type DayBoardRow = {
-  technician: string
-  slots: DayBoardSlot[]
-}
-
-export type FieldPoint = {
-  title: string
-  body: string
-}
-
-export type SiteUnitStatus = "done" | "checking"
-
-export type SiteUnit = {
-  name: string
-  mobileName: string
-  status: SiteUnitStatus
-  note: string
+  /** Not billed — hatched, with `detail` shown as the reason. */
+  excluded?: boolean
 }
 
 export type FooterColumn = {

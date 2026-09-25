@@ -3,19 +3,20 @@ import type { NavLink } from "@/features/landing/types/landing.types"
 /** In-page anchors; each `href` matches a section `id`. */
 export const SECTION_IDS = {
   top: "top",
-  leaks: "leaks",
-  flow: "flow",
+  steps: "how-it-runs",
+  apps: "apps",
+  triage: "triage",
+  handles: "what-it-handles",
   billing: "billing",
-  dispatch: "dispatch",
-  field: "field",
+  leaks: "leaks",
   demo: "demo",
 } as const
 
 export const NAV_LINKS: readonly NavLink[] = [
-  { label: "Why jobs lose money", href: `#${SECTION_IDS.leaks}` },
-  { label: "How it works", href: `#${SECTION_IDS.flow}` },
-  { label: "For your technicians", href: `#${SECTION_IDS.field}` },
-  { label: "Getting paid", href: `#${SECTION_IDS.billing}` },
+  { label: "The three apps", href: `#${SECTION_IDS.apps}` },
+  { label: "How a job runs", href: `#${SECTION_IDS.steps}` },
+  { label: "AI triage", href: `#${SECTION_IDS.triage}` },
+  { label: "What it handles", href: `#${SECTION_IDS.handles}` },
 ]
 
 export const DEMO_HREF = `#${SECTION_IDS.demo}`

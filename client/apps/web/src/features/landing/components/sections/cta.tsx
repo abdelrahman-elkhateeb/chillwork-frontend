@@ -9,7 +9,7 @@ export function Cta() {
     <section id={SECTION_IDS.demo} className={SECTION_SCROLL_OFFSET}>
       <LandingContainer className="flex flex-col gap-[22px] pt-1 pb-9 md:py-20 lg:flex-row lg:items-center lg:justify-between lg:gap-14">
         <div>
-          <h2 className="max-w-[740px] text-[30px] leading-[1.08] font-bold tracking-[-0.028em] text-ink md:text-[44px] md:leading-[1.06]">
+          <h2 className="max-w-[740px] text-[30px] leading-[1.08] font-bold tracking-[-0.028em] text-ink md:text-[42px] md:leading-[1.05]">
             Bring us last week&apos;s messiest job.
           </h2>
           <p className="mt-3.5 max-w-[540px] text-[15px] leading-[1.58] text-muted-foreground md:mt-[18px] md:text-[16.5px] md:leading-[1.6]">

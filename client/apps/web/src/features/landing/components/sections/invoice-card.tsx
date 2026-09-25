@@ -22,14 +22,14 @@ export function InvoiceCard() {
               key={line.title}
               className={cn(
                 "flex justify-between gap-4 border-b border-secondary py-3 md:py-[13px]",
-                line.dropped && "opacity-50"
+                line.excluded && "bg-hatch"
               )}
             >
               <div>
                 <p
                   className={cn(
                     "text-[13.5px] md:text-[14px]",
-                    line.dropped && "line-through"
+                    line.excluded && "text-muted-foreground"
                   )}
                 >
                   {line.title}
@@ -40,12 +40,24 @@ export function InvoiceCard() {
                     </span>
                   ) : null}
                 </p>
-                <p className="mt-0.5 text-[12px] text-muted-foreground md:text-[12.5px]">
+                <p
+                  className={cn(
+                    "mt-0.5 text-[12px] md:text-[12.5px]",
+                    line.excluded
+                      ? "font-narrow font-semibold text-[#8E1913]"
+                      : "text-muted-foreground"
+                  )}
+                >
                   <span className="md:hidden">{line.mobileDetail}</span>
                   <span className="hidden md:inline">{line.detail}</span>
                 </p>
               </div>
-              <span className="shrink-0 font-mono text-[13px] md:text-[13.5px]">
+              <span
+                className={cn(
+                  "shrink-0 font-mono text-[13px] md:text-[13.5px]",
+                  line.excluded && "text-[#8E1913]"
+                )}
+              >
                 {line.amount}
               </span>
             </li>

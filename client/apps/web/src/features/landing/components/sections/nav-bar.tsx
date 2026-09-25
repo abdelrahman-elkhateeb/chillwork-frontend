@@ -38,7 +38,7 @@ export function NavBar() {
   const close = () => setOpen(false)
 
   return (
-    <header className="sticky top-0 z-50 bg-ink">
+    <header className="sticky top-0 z-50 border-b border-paper/10 bg-ink">
       <LandingContainer className="flex h-[58px] items-center justify-between md:h-[74px]">
         <a
           href={`#${SECTION_IDS.top}`}
@@ -55,12 +55,12 @@ export function NavBar() {
           </span>
         </a>
 
-        <nav className="hidden items-center gap-[34px] lg:flex">
+        <nav className="hidden items-center gap-8 lg:flex">
           {NAV_LINKS.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className="text-[14px] font-medium text-paper/70 transition-colors hover:text-paper"
+              className="text-[14px] font-medium text-paper/80 transition-colors hover:text-paper"
             >
               {link.label}
             </a>

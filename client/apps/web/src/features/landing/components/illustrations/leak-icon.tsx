@@ -12,7 +12,7 @@ export function LeakIcon({ name }: Props) {
       fill="none"
       aria-hidden="true"
       strokeWidth="2"
-      className="h-[54px] w-[70px] md:h-[66px] md:w-[86px]"
+      className="h-[54px] w-[70px]"
     >
       {name === "missing-part" ? (
         <>

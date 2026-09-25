@@ -8,16 +8,16 @@ import type {
 export const BILLING_CALLOUTS: readonly BillingCallout[] = [
   {
     title: "A — He scans it in",
-    body: "Picked from your own parts catalog, at your own price. Not typed, not guessed.",
+    body: "Picked from your own catalog at your own price. Not typed, not guessed.",
   },
   {
     title: "B — Stock comes down",
-    body: "One less on the shelf, the moment he fits it. You find out you are low before a customer does.",
+    body: "One less on the shelf the moment he fits it. You find out you are low before a customer does.",
   },
 ]
 
 export const CAPACITOR_CALLOUTS: readonly DrawingCallout[] = [
-  { label: "A", cx: 46, cy: 53, leaderToX: 150 },
+  { label: "A", cx: 46, cy: 62, leaderToX: 128 },
   { label: "B", cx: 352, cy: 150, leaderToX: 248 },
 ]
 
@@ -35,16 +35,16 @@ export const INVOICE = {
     {
       title: "Start capacitor",
       code: "CAP-45/5",
-      detail: "Bedroom unit · 1 × catalog price",
-      mobileDetail: "Bedroom unit",
+      detail: "DEV-01 · 1 × catalog price",
+      mobileDetail: "DEV-01",
       amount: "[AMOUNT]",
     },
     {
-      title: "Living room unit — drain",
-      detail: "Not finished today — off the bill, back on the list",
-      mobileDetail: "Off the bill, back on the list",
+      title: "DEV-02 — drain repair",
+      detail: "Not completed — cannot be charged for. Follow-up opened.",
+      mobileDetail: "Not completed — follow-up opened.",
       amount: "—",
-      dropped: true,
+      excluded: true,
     },
   ] satisfies InvoiceLine[],
 } as const

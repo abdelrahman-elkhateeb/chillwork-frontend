@@ -2,7 +2,7 @@ import { DrawingCallouts } from "@/features/landing/components/illustrations/dra
 import { CAPACITOR_CALLOUTS } from "@/features/landing/constants/billing.constants"
 
 /**
- * Start capacitor with its terminals and rating. The A/B markers only show
+ * Start capacitor being fitted: the part drops in (A), stock comes down (B). The A/B markers only show
  * from `md` up — on phones the drawing is small and the text below explains.
  */
 export function CapacitorDrawing() {
@@ -10,7 +10,7 @@ export function CapacitorDrawing() {
     <svg
       viewBox="0 0 400 300"
       fill="none"
-      className="h-auto w-full max-w-[250px] md:max-w-[400px]"
+      className="h-auto w-full max-w-[250px] md:max-w-[370px]"
       role="img"
       aria-label="Technical drawing of a start capacitor with its rating and terminals labelled"
     >
@@ -46,9 +46,16 @@ export function CapacitorDrawing() {
       </g>
 
       <g className="stroke-primary" strokeWidth="2">
-        <rect x="150" y="44" width="16" height="18" rx="2" />
-        <rect x="178" y="44" width="16" height="18" rx="2" />
-        <rect x="206" y="44" width="16" height="18" rx="2" />
+        <rect x="160" y="14" width="14" height="16" rx="2" />
+        <rect x="181" y="14" width="14" height="16" rx="2" />
+        <rect x="202" y="14" width="14" height="16" rx="2" />
+        {/* the part going in */}
+        <path
+          d="M188 34 V52 M182 46 L188 52 L194 46"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
       </g>
 
       <DrawingCallouts

@@ -10,9 +10,10 @@ export const FOOTER_COLUMNS: readonly FooterColumn[] = [
   {
     heading: "Product",
     links: [
-      { label: "Why jobs lose money", href: `#${SECTION_IDS.leaks}` },
-      { label: "How it works", href: `#${SECTION_IDS.flow}` },
-      { label: "The day board", href: `#${SECTION_IDS.dispatch}` },
+      { label: "How a job runs", href: `#${SECTION_IDS.steps}` },
+      { label: "The three apps", href: `#${SECTION_IDS.apps}` },
+      { label: "AI triage", href: `#${SECTION_IDS.triage}` },
+      { label: "Billing", href: `#${SECTION_IDS.billing}` },
     ],
   },
   {

@@ -1,13 +1,14 @@
+import { AiTriage } from "@/features/landing/components/sections/ai-triage"
 import { Billing } from "@/features/landing/components/sections/billing"
+import { Capabilities } from "@/features/landing/components/sections/capabilities"
 import { Cta } from "@/features/landing/components/sections/cta"
 import { DeviceStrip } from "@/features/landing/components/sections/device-strip"
-import { Dispatch } from "@/features/landing/components/sections/dispatch"
-import { Field } from "@/features/landing/components/sections/field"
-import { Flow } from "@/features/landing/components/sections/flow"
 import { Footer } from "@/features/landing/components/sections/footer"
 import { Hero } from "@/features/landing/components/sections/hero"
+import { JobSteps } from "@/features/landing/components/sections/job-steps"
 import { Leaks } from "@/features/landing/components/sections/leaks"
 import { NavBar } from "@/features/landing/components/sections/nav-bar"
+import { ThreeApps } from "@/features/landing/components/sections/three-apps"
 import { PhotoBand } from "@/features/landing/components/shared/photo-band"
 import {
   PHOTO_CLOSE_UP,
@@ -22,18 +23,18 @@ export function LandingPage() {
         <Hero />
         <PhotoBand
           photo={PHOTO_ON_SITE}
-          heightClassName="h-[300px] md:h-[460px]"
+          heightClassName="h-[300px] md:h-[420px]"
         />
         <DeviceStrip />
-        <Leaks />
-        <Flow />
+        <JobSteps />
+        <ThreeApps />
+        <AiTriage />
+        <Capabilities />
         <Billing />
-        <Dispatch />
-        <Field />
+        <Leaks />
         <PhotoBand
           photo={PHOTO_CLOSE_UP}
-          heightClassName="h-[380px]"
-          className="mt-16 hidden md:block"
+          heightClassName="h-[260px] md:h-[360px]"
         />
         <Cta />
       </main>

@@ -1,7 +1,7 @@
 import { CapacitorDrawing } from "@/features/landing/components/illustrations/capacitor-drawing"
 import { InvoiceCard } from "@/features/landing/components/sections/invoice-card"
 import { LandingContainer } from "@/features/landing/components/shared/landing-container"
-import { SectionEyebrow } from "@/features/landing/components/shared/section-eyebrow"
+import { SectionHeader } from "@/features/landing/components/shared/section-header"
 import { BILLING_CALLOUTS } from "@/features/landing/constants/billing.constants"
 import {
   SECTION_IDS,
@@ -14,16 +14,15 @@ export function Billing() {
       id={SECTION_IDS.billing}
       className={`bg-ink ${SECTION_SCROLL_OFFSET}`}
     >
-      <LandingContainer className="pt-9 pb-10 md:pt-[76px] md:pb-20">
-        <SectionEyebrow tone="dark" className="mb-4 md:mb-[22px]">
-          Part to invoice
-        </SectionEyebrow>
-        <h2 className="max-w-[760px] text-[28px] leading-[1.1] font-bold tracking-[-0.026em] text-paper-bright md:text-[42px] md:leading-[1.08]">
-          The part he fitted is the line on the bill.
-        </h2>
+      <LandingContainer className="py-10 md:py-20">
+        <SectionHeader
+          tone="dark"
+          eyebrow="Part to invoice"
+          title="The part he fitted is the line on the bill."
+        />
 
-        <div className="mt-6 flex flex-col gap-[18px] md:mt-[52px] lg:flex-row lg:items-center lg:gap-[70px]">
-          <div className="flex justify-center lg:w-[440px] lg:shrink-0">
+        <div className="mt-6 flex flex-col gap-[18px] md:mt-[52px] lg:flex-row lg:items-center lg:gap-[62px]">
+          <div className="flex justify-center lg:w-[400px] lg:shrink-0">
             <CapacitorDrawing />
           </div>
 
