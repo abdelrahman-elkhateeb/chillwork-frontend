@@ -1,3 +1,5 @@
+import { Button } from "@workspace/ui/components/button"
+
 import { DispatcherMockup } from "@/features/landing/components/mockups/dispatcher/dispatcher-mockup"
 import { LandingContainer } from "@/features/landing/components/shared/landing-container"
 import { SectionEyebrow } from "@/features/landing/components/shared/section-eyebrow"
@@ -29,18 +31,19 @@ export function Hero() {
             </p>
 
             <div className="mt-[22px] flex flex-col gap-2.5 md:mt-8 md:flex-row md:items-center md:gap-3">
-              <a
-                href={DEMO_HREF}
-                className="flex h-[52px] items-center justify-center rounded-[6px] bg-primary px-7 text-[15.5px] font-semibold text-ink transition-colors hover:bg-[#F06A2C] md:h-[50px]"
+              <Button asChild size="xl" className="md:h-[50px]">
+                <a href={DEMO_HREF}>Book a demo</a>
+              </Button>
+              <Button
+                asChild
+                variant="inverse"
+                size="xl"
+                className="px-[26px] md:h-[50px]"
               >
-                Book a demo
-              </a>
-              <a
-                href={`#${SECTION_IDS.handles}`}
-                className="flex h-[52px] items-center justify-center rounded-[6px] border border-paper/25 px-[26px] text-[15.5px] font-semibold text-paper/90 transition-colors hover:border-paper/50 hover:text-paper md:h-[50px]"
-              >
-                See everything it handles →
-              </a>
+                <a href={`#${SECTION_IDS.handles}`}>
+                  See everything it handles →
+                </a>
+              </Button>
             </div>
           </div>
 

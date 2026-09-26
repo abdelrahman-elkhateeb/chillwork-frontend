@@ -1,3 +1,6 @@
+import { Card } from "@workspace/ui/components/card"
+import { Separator } from "@workspace/ui/components/separator"
+
 import { CUSTOMER_REPORT } from "@/features/landing/constants/triage.constants"
 
 function PhotoTile() {
@@ -21,7 +24,7 @@ function PhotoTile() {
 /** What the customer actually said and sent, kept verbatim. */
 export function CustomerReportCard() {
   return (
-    <div className="rounded-[8px] border border-paper/15 p-5">
+    <Card className="block border-paper/15 bg-transparent p-5 text-inherit">
       <p className="text-[11.5px] font-bold tracking-[0.14em] text-paper/50 uppercase">
         {CUSTOMER_REPORT.label}
       </p>
@@ -38,7 +41,8 @@ export function CustomerReportCard() {
         {CUSTOMER_REPORT.photoNote}
       </p>
 
-      <div className="mt-4 border-t border-paper/12 pt-4">
+      <Separator className="mt-4 bg-paper/12" />
+      <div className="pt-4">
         <p className="text-[11.5px] font-bold tracking-[0.14em] text-paper/50 uppercase">
           {CUSTOMER_REPORT.fallbackLabel}
         </p>
@@ -46,6 +50,6 @@ export function CustomerReportCard() {
           {CUSTOMER_REPORT.fallback}
         </p>
       </div>
-    </div>
+    </Card>
   )
 }

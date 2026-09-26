@@ -1,3 +1,8 @@
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+} from "@workspace/ui/components/alert"
 import { cn } from "@workspace/ui/lib/utils"
 
 import {
@@ -14,26 +19,24 @@ export function DecisionsPanel() {
 
       <ul className="mt-2.5 flex flex-col gap-2">
         {DECISIONS.map((decision) => (
-          <li
-            key={decision.title}
-            className={cn(
-              "border border-l-[3px] border-secondary bg-card px-3 py-2.5 font-narrow",
-              decision.tone === "danger"
-                ? "border-l-destructive"
-                : "border-l-[#1F6FA8]"
-            )}
-          >
-            <p
+          <li key={decision.title}>
+            <Alert
+              variant={decision.tone === "danger" ? "destructive" : "info"}
+              role={undefined}
               className={cn(
-                "text-[12.5px] font-semibold",
-                decision.tone === "danger" ? "text-[#8E1913]" : "text-[#17557E]"
+                "rounded-none border-secondary bg-card px-3 py-2.5 font-narrow",
+                decision.tone === "danger"
+                  ? "border-l-destructive"
+                  : "border-l-[#1F6FA8]"
               )}
             >
-              {decision.title}
-            </p>
-            <p className="mt-1 text-[12px] leading-[1.45] text-muted-foreground">
-              {decision.body}
-            </p>
+              <AlertTitle className="text-[12.5px]">
+                {decision.title}
+              </AlertTitle>
+              <AlertDescription className="text-[12px] leading-[1.45]">
+                {decision.body}
+              </AlertDescription>
+            </Alert>
           </li>
         ))}
       </ul>

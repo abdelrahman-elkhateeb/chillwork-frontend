@@ -1,3 +1,5 @@
+import { Badge } from "@workspace/ui/components/badge"
+import { Card, CardContent, CardHeader } from "@workspace/ui/components/card"
 import { cn } from "@workspace/ui/lib/utils"
 
 import { INVOICE } from "@/features/landing/constants/billing.constants"
@@ -5,17 +7,20 @@ import { INVOICE } from "@/features/landing/constants/billing.constants"
 /** Sample invoice built from the parts the technician fitted. */
 export function InvoiceCard() {
   return (
-    <div className="overflow-hidden rounded-[var(--radius-card)] bg-card text-ink">
-      <div className="flex items-center justify-between border-b border-border bg-surface-sunken px-4 py-[13px] md:px-5 md:py-3.5">
+    <Card className="block border-0 text-ink">
+      <CardHeader className="flex-nowrap px-4 py-[13px] md:px-5 md:py-3.5">
         <span className="font-mono text-[12.5px] font-semibold md:text-[13px]">
           {INVOICE.number}
         </span>
-        <span className="rounded-[3px] border border-[rgba(23,135,106,0.38)] bg-[rgba(23,135,106,0.13)] px-2 py-[3px] text-[11px] font-bold tracking-[0.08em] text-[#11705A] uppercase md:px-[9px] md:py-1 md:text-[11.5px]">
+        <Badge
+          variant="success"
+          className="border-[rgba(23,135,106,0.38)] bg-[rgba(23,135,106,0.13)] px-2 py-[3px] font-sans leading-[normal] md:px-[9px] md:py-1 md:text-[11.5px]"
+        >
           {INVOICE.status}
-        </span>
-      </div>
+        </Badge>
+      </CardHeader>
 
-      <div className="px-4 pt-1 pb-0.5 md:px-5 md:pt-1.5 md:pb-1">
+      <CardContent className="px-4 pt-1 pb-0.5 md:px-5 md:pt-1.5 md:pb-1">
         <ul>
           {INVOICE.lines.map((line) => (
             <li
@@ -72,7 +77,7 @@ export function InvoiceCard() {
             {INVOICE.total}
           </span>
         </div>
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   )
 }

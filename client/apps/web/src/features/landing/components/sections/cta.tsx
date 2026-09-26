@@ -1,3 +1,5 @@
+import { Button } from "@workspace/ui/components/button"
+
 import { LandingContainer } from "@/features/landing/components/shared/landing-container"
 import {
   SECTION_IDS,
@@ -25,18 +27,17 @@ export function Cta() {
         </div>
 
         <div className="flex w-full flex-col gap-2.5 lg:w-[300px] lg:shrink-0">
-          <a
-            href="#book"
-            className="flex h-[54px] items-center justify-center rounded-[6px] bg-primary text-[15.5px] font-semibold text-ink transition-colors hover:bg-[#F06A2C]"
+          <Button asChild size="xl" className="h-[54px] px-0">
+            <a href="#book">Book a demo</a>
+          </Button>
+          <Button
+            asChild
+            variant="outline"
+            size="xl"
+            className="h-[54px] px-0 text-ink"
           >
-            Book a demo
-          </a>
-          <a
-            href="#contact"
-            className="flex h-[54px] items-center justify-center rounded-[6px] border border-line-strong text-[15.5px] font-semibold text-ink transition-colors hover:bg-secondary"
-          >
-            Call us instead
-          </a>
+            <a href="#contact">Call us instead</a>
+          </Button>
           <p className="mt-0.5 text-center text-[12.5px] text-muted-foreground md:mt-1">
             No card, no trial clock.
           </p>

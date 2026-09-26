@@ -1,5 +1,11 @@
 import { useState } from "react"
 import { Link } from "react-router-dom"
+import { Button } from "@workspace/ui/components/button"
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@workspace/ui/components/collapsible"
 import { cn } from "@workspace/ui/lib/utils"
 
 import { BrandMark } from "@/components/brand/brand-logo"
@@ -38,67 +44,65 @@ export function NavBar() {
   const close = () => setOpen(false)
 
   return (
-    <header className="sticky top-0 z-50 border-b border-paper/10 bg-ink">
-      <LandingContainer className="flex h-[58px] items-center justify-between md:h-[74px]">
-        <a
-          href={`#${SECTION_IDS.top}`}
-          className="flex items-center gap-[9px] text-paper md:gap-[11px]"
-        >
-          <span className="md:hidden">
-            <BrandMark size={24} />
-          </span>
-          <span className="hidden md:block">
-            <BrandMark size={27} />
-          </span>
-          <span className="font-heading text-[15px] font-bold tracking-[-0.01em] uppercase md:text-[17px]">
-            ChillWork
-          </span>
-        </a>
-
-        <nav className="hidden items-center gap-8 lg:flex">
-          {NAV_LINKS.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="text-[14px] font-medium text-paper/80 transition-colors hover:text-paper"
-            >
-              {link.label}
-            </a>
-          ))}
-        </nav>
-
-        <div className="hidden items-center gap-3.5 md:flex">
-          <Link
-            to={ROUTES.login}
-            className="px-0.5 py-[9px] text-[14px] font-medium text-paper/70 transition-colors hover:text-paper"
-          >
-            Sign in
-          </Link>
+    <Collapsible open={open} onOpenChange={setOpen} asChild>
+      <header className="sticky top-0 z-50 border-b border-paper/10 bg-ink">
+        <LandingContainer className="flex h-[58px] items-center justify-between md:h-[74px]">
           <a
-            href={DEMO_HREF}
-            className="rounded-[6px] bg-primary px-5 py-[11px] text-[14px] font-semibold text-ink transition-colors hover:bg-[#F06A2C]"
+            href={`#${SECTION_IDS.top}`}
+            className="flex items-center gap-[9px] text-paper md:gap-[11px]"
           >
-            Book a demo
+            <span className="md:hidden">
+              <BrandMark size={24} />
+            </span>
+            <span className="hidden md:block">
+              <BrandMark size={27} />
+            </span>
+            <span className="font-heading text-[15px] font-bold tracking-[-0.01em] uppercase md:text-[17px]">
+              ChillWork
+            </span>
           </a>
-        </div>
 
-        <button
-          type="button"
-          aria-label={open ? "Close menu" : "Open menu"}
-          aria-expanded={open}
-          aria-controls="landing-mobile-menu"
-          onClick={() => setOpen((current) => !current)}
-          className="-mr-3 flex size-11 items-center justify-center md:hidden"
-        >
-          <MenuIcon open={open} />
-        </button>
-      </LandingContainer>
+          <nav className="hidden items-center gap-8 lg:flex">
+            {NAV_LINKS.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                className="text-[14px] font-medium text-paper/80 transition-colors hover:text-paper"
+              >
+                {link.label}
+              </a>
+            ))}
+          </nav>
 
-      {open ? (
-        <div
-          id="landing-mobile-menu"
-          className="border-t border-paper/10 bg-ink md:hidden"
-        >
+          <div className="hidden items-center gap-3.5 md:flex">
+            <Link
+              to={ROUTES.login}
+              className="px-0.5 py-[9px] text-[14px] font-medium text-paper/70 transition-colors hover:text-paper"
+            >
+              Sign in
+            </Link>
+            <Button
+              asChild
+              size="lg"
+              className="h-auto px-5 py-[11px] text-[14px] font-semibold"
+            >
+              <a href={DEMO_HREF}>Book a demo</a>
+            </Button>
+          </div>
+
+          <CollapsibleTrigger asChild>
+            <Button
+              variant="ghost"
+              size="icon"
+              aria-label={open ? "Close menu" : "Open menu"}
+              className="-mr-3 size-11 hover:bg-transparent aria-expanded:bg-transparent md:hidden"
+            >
+              <MenuIcon open={open} />
+            </Button>
+          </CollapsibleTrigger>
+        </LandingContainer>
+
+        <CollapsibleContent className="border-t border-paper/10 bg-ink md:hidden">
           <LandingContainer className="flex flex-col py-3">
             {NAV_LINKS.map((link) => (
               <a
@@ -117,16 +121,14 @@ export function NavBar() {
             >
               Sign in
             </Link>
-            <a
-              href={DEMO_HREF}
-              onClick={close}
-              className="mt-2 mb-2 flex h-[52px] items-center justify-center rounded-[6px] bg-primary text-[15.5px] font-semibold text-ink"
-            >
-              Book a demo
-            </a>
+            <Button asChild size="xl" className="my-2">
+              <a href={DEMO_HREF} onClick={close}>
+                Book a demo
+              </a>
+            </Button>
           </LandingContainer>
-        </div>
-      ) : null}
-    </header>
+        </CollapsibleContent>
+      </header>
+    </Collapsible>
   )
 }

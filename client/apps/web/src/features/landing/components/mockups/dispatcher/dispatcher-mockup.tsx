@@ -1,3 +1,5 @@
+import { Button } from "@workspace/ui/components/button"
+
 import { CityStrip } from "@/features/landing/components/mockups/dispatcher/city-strip"
 import { DecisionsPanel } from "@/features/landing/components/mockups/dispatcher/decisions-panel"
 import { DispatcherSidebar } from "@/features/landing/components/mockups/dispatcher/dispatcher-sidebar"
@@ -31,16 +33,21 @@ export function DispatcherMockup() {
           </div>
           <div className="flex items-center gap-1.5 font-narrow text-[12.5px]">
             {DISPATCHER_MOCKUP.filters.map((filter) => (
-              <span
+              <Button
                 key={filter}
-                className="flex h-7 items-center rounded-[4px] border border-line-strong bg-card px-2.5 text-muted-foreground"
+                asChild
+                variant="outline"
+                className="pointer-events-none h-7 rounded-[4px] bg-card px-2.5 text-[12.5px] font-normal text-muted-foreground"
               >
-                {filter}
-              </span>
+                <span>{filter}</span>
+              </Button>
             ))}
-            <span className="flex h-7 items-center rounded-[4px] bg-primary px-3 font-sans font-semibold text-ink">
-              {DISPATCHER_MOCKUP.action}
-            </span>
+            <Button
+              asChild
+              className="pointer-events-none h-7 rounded-[4px] px-3 font-sans text-[12.5px] font-semibold text-ink"
+            >
+              <span>{DISPATCHER_MOCKUP.action}</span>
+            </Button>
           </div>
         </div>
 

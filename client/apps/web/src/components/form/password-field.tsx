@@ -1,4 +1,5 @@
 import { useId, useState } from "react"
+import { Button } from "@workspace/ui/components/button"
 import { Input } from "@workspace/ui/components/input"
 import { cn } from "@workspace/ui/lib/utils"
 
@@ -41,16 +42,18 @@ export function PasswordField({
           {...inputProps}
         />
         {revealable ? (
-          <button
+          <Button
             type="button"
+            variant="secondary"
+            size="sm"
             onClick={() => setVisible((current) => !current)}
             aria-controls={inputId}
             aria-pressed={visible}
             disabled={inputProps.disabled}
-            className="absolute top-1.5 right-1.5 h-[34px] rounded-[4px] bg-secondary px-3 text-[13px] font-semibold text-foreground transition-colors hover:bg-[#D7D9D9] disabled:opacity-50"
+            className="absolute top-1.5 right-1.5 h-[34px] rounded-[4px] px-3 text-[13px] font-semibold text-foreground hover:bg-[#D7D9D9]"
           >
             {visible ? "Hide" : "Show"}
-          </button>
+          </Button>
         ) : null}
       </div>
     </FieldChrome>

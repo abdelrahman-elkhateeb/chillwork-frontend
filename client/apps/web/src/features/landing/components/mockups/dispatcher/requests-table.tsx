@@ -1,3 +1,4 @@
+import { Badge } from "@workspace/ui/components/badge"
 import { cn } from "@workspace/ui/lib/utils"
 
 import { StatusBadge } from "@/features/landing/components/mockups/status-badge"
@@ -58,9 +59,12 @@ export function RequestsTable() {
                 row.readingNote.kind === "in-stock" ? (
                   <span className="text-[#17876A]">{row.readingNote.text}</span>
                 ) : (
-                  <span className="rounded-[2px] border border-destructive/40 bg-hatch px-1.5 py-0.5 text-[11px] font-bold tracking-[0.08em] text-[#8E1913] uppercase">
+                  <Badge
+                    variant="blocked"
+                    className="rounded-[2px] px-1.5 py-0.5 leading-[normal]"
+                  >
                     {row.readingNote.text}
-                  </span>
+                  </Badge>
                 )
               ) : null}
             </span>

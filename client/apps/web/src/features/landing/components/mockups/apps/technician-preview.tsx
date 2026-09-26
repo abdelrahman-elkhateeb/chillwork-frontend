@@ -1,3 +1,4 @@
+import { Button } from "@workspace/ui/components/button"
 import { cn } from "@workspace/ui/lib/utils"
 
 import { TECHNICIAN_PREVIEW } from "@/features/landing/constants/apps.constants"
@@ -71,9 +72,12 @@ export function TechnicianPreview() {
             ))}
           </ul>
 
-          <div className="mt-2.5 flex h-8 items-center justify-center rounded-[4px] bg-primary text-[11.5px] font-semibold text-ink">
-            {TECHNICIAN_PREVIEW.action}
-          </div>
+          <Button
+            asChild
+            className="pointer-events-none mt-2.5 flex h-8 rounded-[4px] text-[11.5px] font-semibold text-ink"
+          >
+            <span>{TECHNICIAN_PREVIEW.action}</span>
+          </Button>
         </div>
       </div>
     </div>

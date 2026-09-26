@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { FieldSet } from "@workspace/ui/components/field"
 
 import { FormAlert } from "@/components/form/form-alert"
 import type { FormAlertContent } from "@/components/form/form.types"
@@ -57,10 +58,7 @@ export function LoginForm({ defaultEmail = "", notice, onSuccess }: Props) {
       {alert ? <FormAlert {...alert} className="mt-6" /> : null}
 
       <form noValidate onSubmit={onSubmit} className="mt-7">
-        <fieldset
-          disabled={login.isPending}
-          className="flex min-w-0 flex-col gap-[18px]"
-        >
+        <FieldSet disabled={login.isPending} className="min-w-0 gap-[18px]">
           <TextField
             label="Email"
             type="email"
@@ -78,7 +76,7 @@ export function LoginForm({ defaultEmail = "", notice, onSuccess }: Props) {
             error={errors.password?.message}
             {...register("password")}
           />
-        </fieldset>
+        </FieldSet>
 
         <SubmitButton
           pending={login.isPending}

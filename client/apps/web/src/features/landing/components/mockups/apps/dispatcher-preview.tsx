@@ -1,3 +1,9 @@
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+} from "@workspace/ui/components/alert"
+import { Card } from "@workspace/ui/components/card"
 import { cn } from "@workspace/ui/lib/utils"
 
 import { DISPATCHER_PREVIEW } from "@/features/landing/constants/apps.constants"
@@ -13,7 +19,7 @@ const SLOT_CLASSES: Record<ScheduleSlotKind, string> = {
 export function DispatcherPreview() {
   return (
     <div className="flex flex-col gap-[9px] font-narrow">
-      <div className="rounded-[6px] border border-secondary bg-card px-3.5 py-3">
+      <Card className="block rounded-[6px] border-secondary px-3.5 py-3">
         <p className="text-[12px] font-semibold text-ink">
           {DISPATCHER_PREVIEW.date}
         </p>
@@ -35,16 +41,20 @@ export function DispatcherPreview() {
             </li>
           ))}
         </ul>
-      </div>
+      </Card>
 
-      <div className="rounded-[6px] border border-l-[3px] border-secondary border-l-destructive bg-card px-3.5 py-[11px]">
-        <p className="text-[12.5px] font-bold text-[#8E1913]">
+      <Alert
+        variant="destructive"
+        role={undefined}
+        className="rounded-[6px] border-secondary border-l-destructive bg-card px-3.5 py-[11px]"
+      >
+        <AlertTitle className="text-[12.5px] font-bold">
           {DISPATCHER_PREVIEW.refusal.title}
-        </p>
-        <p className="mt-1 text-[12px] text-muted-foreground">
+        </AlertTitle>
+        <AlertDescription className="text-[12px] leading-[normal]">
           {DISPATCHER_PREVIEW.refusal.body}
-        </p>
-      </div>
+        </AlertDescription>
+      </Alert>
     </div>
   )
 }

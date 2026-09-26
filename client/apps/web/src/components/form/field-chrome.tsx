@@ -1,5 +1,10 @@
 import type { ReactNode } from "react"
-import { Label } from "@workspace/ui/components/label"
+import {
+  Field,
+  FieldDescription,
+  FieldError,
+  FieldLabel,
+} from "@workspace/ui/components/field"
 
 import { fieldDescriptionId } from "@/components/form/field-ids"
 import type { FieldChromeProps } from "@/components/form/form.types"
@@ -18,30 +23,32 @@ export function FieldChrome({
   error,
   children,
 }: Props) {
-  const message = error ?? hint
-
   return (
-    <div>
-      <div className="mb-[7px] flex items-baseline justify-between gap-3">
-        <Label htmlFor={id}>{label}</Label>
+    <Field className="gap-[7px]">
+      <div className="flex items-baseline justify-between gap-3">
+        <FieldLabel htmlFor={id} className="leading-[normal]">
+          {label}
+        </FieldLabel>
         {labelAside}
       </div>
 
       {children}
 
-      {message ? (
-        <p
+      {error ? (
+        <FieldError
           id={fieldDescriptionId(id)}
-          role={error ? "alert" : undefined}
-          className={
-            error
-              ? "mt-[7px] text-[12.5px] leading-normal text-[#8E1913]"
-              : "mt-[7px] text-[12.5px] leading-normal text-muted-foreground"
-          }
+          className="text-[12.5px] leading-normal text-[#8E1913]"
         >
-          {message}
-        </p>
+          {error}
+        </FieldError>
+      ) : hint ? (
+        <FieldDescription
+          id={fieldDescriptionId(id)}
+          className="text-[12.5px] leading-normal"
+        >
+          {hint}
+        </FieldDescription>
       ) : null}
-    </div>
+    </Field>
   )
 }

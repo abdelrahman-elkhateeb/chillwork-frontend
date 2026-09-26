@@ -1,20 +1,28 @@
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@workspace/ui/components/card"
+
 import { DeviceReadingCard } from "@/features/landing/components/triage/device-reading-card"
 import { TRIAGE_ANALYSIS } from "@/features/landing/constants/triage.constants"
 
 /** The AI reading attached to a request before it is stored. */
 export function AnalysisCard() {
   return (
-    <div className="overflow-hidden rounded-[8px] bg-card">
-      <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 border-b border-border bg-surface-sunken px-5 py-3.5">
-        <p className="text-[14px] font-semibold text-ink">
-          {TRIAGE_ANALYSIS.title}
-        </p>
+    <Card className="block border-0">
+      <CardHeader>
+        <CardTitle asChild>
+          <p>{TRIAGE_ANALYSIS.title}</p>
+        </CardTitle>
         <p className="font-narrow text-[12px] font-bold tracking-[0.08em] text-muted-foreground uppercase">
           {TRIAGE_ANALYSIS.timing}
         </p>
-      </div>
+      </CardHeader>
 
-      <div className="p-5">
+      <CardContent className="p-5">
         <div className="grid gap-4 md:grid-cols-2">
           {TRIAGE_ANALYSIS.devices.map((reading) => (
             <DeviceReadingCard key={reading.id} reading={reading} />
@@ -36,11 +44,11 @@ export function AnalysisCard() {
             </div>
           ))}
         </dl>
-      </div>
+      </CardContent>
 
-      <p className="border-t border-secondary bg-[#EDEFEF] px-5 py-3.5 text-[13px] text-muted-foreground">
+      <CardFooter className="text-[13px] text-muted-foreground">
         {TRIAGE_ANALYSIS.disclaimer}
-      </p>
-    </div>
+      </CardFooter>
+    </Card>
   )
 }
