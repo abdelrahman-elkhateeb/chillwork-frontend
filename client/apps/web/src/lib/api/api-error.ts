@@ -34,11 +34,12 @@ export class ApiError extends Error {
     })
   }
 
-  static unknown(status: number): ApiError {
+  static unknown(status: number, requestId?: string): ApiError {
     return new ApiError({
       status,
       code: API_ERROR_CODES.UNKNOWN_ERROR,
       message: "Something went wrong. Please try again.",
+      requestId,
     })
   }
 }

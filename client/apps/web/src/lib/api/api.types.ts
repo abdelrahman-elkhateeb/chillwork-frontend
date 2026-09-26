@@ -20,6 +20,8 @@ export type RequestOptions = {
   method?: HttpMethod
   body?: unknown
   signal?: AbortSignal
+  /** Extra request headers, e.g. `Idempotency-Key`. */
+  headers?: Record<string, string>
   /**
    * Don't try `POST /auth/refresh` and retry when this request gets a 401.
    * Set on the auth endpoints themselves, where a 401 is a real answer

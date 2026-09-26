@@ -1,5 +1,5 @@
 import { ApiError } from "@/lib/api/api-error"
-import { API_BASE_URL } from "@/lib/api/api.constants"
+import { API_BASE_URL, REQUEST_ID_HEADER } from "@/lib/api/api.constants"
 import type {
   ApiFailure,
   ApiSuccess,
@@ -9,12 +9,16 @@ import { refreshSession } from "@/lib/api/refresh-session"
 
 async function send(path: string, options: RequestOptions): Promise<Response> {
   const hasBody = options.body !== undefined
+  const headers = new Headers(options.headers)
+  if (hasBody) {
+    headers.set("Content-Type", "application/json")
+  }
 
   try {
     return await fetch(`${API_BASE_URL}${path}`, {
       method: options.method ?? "GET",
       credentials: "same-origin",
-      headers: hasBody ? { "Content-Type": "application/json" } : undefined,
+      headers,
       body: hasBody ? JSON.stringify(options.body) : undefined,
       signal: options.signal,
     })
@@ -49,7 +53,12 @@ async function unwrap<T>(response: Response): Promise<T> {
     throw ApiError.fromFailure(response.status, body)
   }
 
-  throw ApiError.unknown(response.status)
+  // No envelope (e.g. a proxy error page) — the header still ties it to
+  // the server logs when the request reached the API at all.
+  throw ApiError.unknown(
+    response.status,
+    response.headers.get(REQUEST_ID_HEADER) ?? undefined
+  )
 }
 
 /**
