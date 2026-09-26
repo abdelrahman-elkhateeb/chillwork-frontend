@@ -139,6 +139,7 @@ Current features:
 | `landing` | `/`                  | Marketing page built from `sections/`; all copy and data live in `constants/*.constants.ts`   |
 | `auth`    | `/login`, `/signup`  | Forms, guards, current-user query, session handling                                            |
 | `account` | `/account`           | Signed-in profile view + logout                                                                |
+| `requests`| `/requests/new`      | Customer service request: 3 steps (where → units → check and send), `POST /requests`          |
 
 ### Query client defaults
 
@@ -166,6 +167,7 @@ ROUTES = { home: "/", login: "/login", signup: "/signup", account: "/account" }
 | `/login`   | `GuestOnly`   | `LoginPage`   |
 | `/signup`  | `GuestOnly`   | `SignupPage`  |
 | `/account` | `RequireAuth` | `AccountPage` |
+| `/requests/new` | `RequireAuth` | `NewRequestPage` (customers only; staff see a notice) |
 | `*`        | —             | redirect to `/` |
 
 **Guards** (`features/auth/guards/`) are layout routes rendering `<Outlet />`:
@@ -266,6 +268,15 @@ type AuthUser = {
   - `signedIn: true` → `/account` with `{ welcome: true }`.
   - `signedIn: false` (account created, login failed, e.g. rate-limited) → `/login` with the email prefilled and a "just registered" notice.
 - **Logout** — `useLogout()` posts `/auth/logout` and then does a **full page load** to `/` on either outcome, which wipes all in-memory user data and avoids a guard/navigation race.
+
+## Service requests
+
+`features/requests` — FS15 (`POST /requests`), with FS14's analysis running server-side.
+
+- **One `Idempotency-Key` per submission.** `useCreateServiceRequest()` keeps the key while the payload is unchanged, so double clicks, automatic retries (network, any 5xx, `IDEMPOTENCY_IN_PROGRESS` — up to 2) and a manual "Try again" all replay the same request. Editing the form after a failure starts a new key (the API rejects a reused key with a different payload).
+- **The customer never sees AI output.** The response has none; the sending state just says what is happening.
+- **Draft:** the form is saved to `sessionStorage` per user as it's typed ("Saved as you type") and cleared on success.
+- **API gaps the UI works around:** there's no "how to find you" field, so it's appended to `address` after ` — `; photos are hidden until FS13 exists (the API rejects any `photoIds`).
 
 ### Error messages
 

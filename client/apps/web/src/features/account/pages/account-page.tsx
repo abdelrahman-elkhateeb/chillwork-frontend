@@ -1,6 +1,8 @@
-import { useLocation } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
+import { Button } from "@workspace/ui/components/button"
 
 import { FormAlert } from "@/components/form/form-alert"
+import { ROUTES } from "@/config/routes"
 import { useCurrentUser, useLogout } from "@/features/auth"
 import { AccountDetails } from "@/features/account/components/account-details"
 import { AccountHeader } from "@/features/account/components/account-header"
@@ -42,6 +44,16 @@ export function AccountPage() {
         <p className="mt-2.5 text-[15px] text-muted-foreground">
           The details your technician sees when they're on the way.
         </p>
+
+        {user.role === "CUSTOMER" ? (
+          <Button
+            asChild
+            size="xl"
+            className="mt-6 w-full rounded-[var(--radius-control)] sm:w-auto"
+          >
+            <Link to={ROUTES.newRequest}>Request a service visit</Link>
+          </Button>
+        ) : null}
 
         <div className="mt-7">
           <AccountDetails details={toAccountDetails(user)} />

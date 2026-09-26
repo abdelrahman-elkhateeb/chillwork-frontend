@@ -1,6 +1,10 @@
 // Public surface of the auth feature. Other features import from here,
 // never from its internals.
 export { authKeys } from "@/features/auth/api/auth.query-keys"
+export {
+  PHONE_PATTERN,
+  PHONE_SEPARATORS,
+} from "@/features/auth/constants/auth-validation.constants"
 export { GuestOnly } from "@/features/auth/guards/guest-only"
 export { RequireAuth } from "@/features/auth/guards/require-auth"
 export { useCurrentUser } from "@/features/auth/hooks/use-current-user"
