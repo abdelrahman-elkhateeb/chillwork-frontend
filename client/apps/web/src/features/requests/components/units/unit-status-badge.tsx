@@ -1,4 +1,4 @@
-import { cn } from "@workspace/ui/lib/utils"
+import { Badge } from "@workspace/ui/components/badge"
 
 import { UNIT_STATUS_LABELS } from "@/features/requests/constants/request-copy.constants"
 import type { UnitStatus } from "@/features/requests/lib/unit-status"
@@ -10,22 +10,15 @@ type Props = {
 }
 
 export function UnitStatusBadge({ status, showError }: Props) {
-  const isReady = status === "ready"
+  const variant =
+    status === "ready" ? "success" : showError ? "destructive" : "secondary"
 
   return (
-    <span
-      className={cn(
-        "rounded-[3px] border px-2 py-[3px] font-narrow text-[12px] font-bold tracking-[0.05em] whitespace-nowrap uppercase",
-        isReady && "border-[#17876A]/35 bg-[#17876A]/12 text-[#11705A]",
-        !isReady &&
-          showError &&
-          "border-destructive/32 bg-destructive/9 text-[#8E1913]",
-        !isReady &&
-          !showError &&
-          "border-border bg-secondary text-muted-foreground"
-      )}
+    <Badge
+      variant={variant}
+      className="px-2 py-[3px] text-[12px] leading-normal tracking-[0.05em]"
     >
       {UNIT_STATUS_LABELS[status]}
-    </span>
+    </Badge>
   )
 }

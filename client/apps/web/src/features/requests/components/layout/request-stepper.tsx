@@ -1,5 +1,6 @@
 import { Fragment } from "react"
 import { CheckIcon } from "lucide-react"
+import { Button } from "@workspace/ui/components/button"
 import { cn } from "@workspace/ui/lib/utils"
 
 import {
@@ -74,13 +75,14 @@ export function RequestStepper({ current, onStepSelect }: Props) {
                   className="flex shrink-0"
                 >
                   {canSelect ? (
-                    <button
+                    <Button
                       type="button"
+                      variant="ghost"
                       onClick={() => onStepSelect(index as RequestStepIndex)}
-                      className="flex items-center gap-2.5 rounded-sm hover:underline"
+                      className="h-auto gap-2.5 p-0 hover:bg-transparent hover:underline"
                     >
                       {content}
-                    </button>
+                    </Button>
                   ) : (
                     <span className="flex items-center gap-2.5">{content}</span>
                   )}

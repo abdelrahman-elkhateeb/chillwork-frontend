@@ -6,6 +6,8 @@ import {
   GripVerticalIcon,
   XIcon,
 } from "lucide-react"
+import { Button } from "@workspace/ui/components/button"
+import { Card } from "@workspace/ui/components/card"
 import { cn } from "@workspace/ui/lib/utils"
 
 import { TextareaField } from "@/components/form/textarea-field"
@@ -63,46 +65,47 @@ export function UnitCard({
       Unit {number}
     </span>
   )
+  const grip = (
+    <GripVerticalIcon
+      aria-hidden="true"
+      className="hidden size-4 shrink-0 text-[#8A9093] sm:block"
+    />
+  )
 
   if (!isOpen) {
     return (
-      <div className="flex items-center justify-between gap-3 rounded-[6px] border border-border bg-card px-4 py-3.5 md:px-[18px]">
+      <Card className="flex-row items-center justify-between gap-3 rounded-[6px] px-4 py-3.5 md:px-[18px]">
         <div className="flex min-w-0 items-center gap-3">
-          <GripVerticalIcon
-            aria-hidden="true"
-            className="hidden size-4 shrink-0 text-[#8A9093] sm:block"
-          />
+          {grip}
           {title}
           <span className="hidden min-w-0 truncate font-narrow text-[14px] text-muted-foreground md:inline">
             {summarizeUnit(unit)}
           </span>
           <UnitStatusBadge status={status} showError={showErrors} />
         </div>
-        <button
+        <Button
           type="button"
+          variant="link"
           onClick={onOpen}
           aria-label={`${COPY.edit} unit ${number}`}
-          className="shrink-0 px-0.5 py-1.5 font-narrow text-[13.5px] font-bold text-primary-deep hover:text-primary"
+          className="h-auto shrink-0 px-0.5 py-1.5 font-narrow text-[13.5px] font-bold text-primary-deep"
         >
           {COPY.edit}
-        </button>
-      </div>
+        </Button>
+      </Card>
     )
   }
 
   return (
-    <div
+    <Card
       className={cn(
-        "rounded-[6px] border border-l-[3px] border-border bg-card",
+        "rounded-[6px] border-l-[3px]",
         isInvalid ? "border-l-destructive" : "border-l-primary"
       )}
     >
       <div className="flex items-center justify-between gap-3 border-b border-secondary px-4 py-[13px] md:px-[18px]">
         <div className="flex min-w-0 items-center gap-3">
-          <GripVerticalIcon
-            aria-hidden="true"
-            className="hidden size-4 shrink-0 text-[#8A9093] sm:block"
-          />
+          {grip}
           {title}
           <UnitStatusBadge status={status} showError={showErrors} />
         </div>
@@ -161,7 +164,7 @@ export function UnitCard({
           {...register(`devices.${index}.originalDescription`)}
         />
       </div>
-    </div>
+    </Card>
   )
 }
 
@@ -175,13 +178,15 @@ function UnitIconButton({
   children: ReactNode
 }) {
   return (
-    <button
+    <Button
       type="button"
+      variant="outline"
+      size="icon"
       aria-label={label}
       onClick={onClick}
-      className="flex size-8 items-center justify-center rounded-[4px] border border-border bg-white text-foreground hover:bg-secondary [&_svg]:size-4"
+      className="rounded-[4px] border-border bg-white"
     >
       {children}
-    </button>
+    </Button>
   )
 }

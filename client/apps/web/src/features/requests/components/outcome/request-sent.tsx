@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom"
 import { CheckIcon } from "lucide-react"
 import { Button } from "@workspace/ui/components/button"
+import { Card } from "@workspace/ui/components/card"
 
 import { ROUTES } from "@/config/routes"
 import { REQUEST_COPY } from "@/features/requests/constants/request-copy.constants"
@@ -26,7 +27,7 @@ export function RequestSent({ request, firstName }: Props) {
         </h1>
       </div>
 
-      <div className="mt-[18px] rounded-[6px] bg-ink px-[18px] py-4">
+      <Card className="mt-[18px] block rounded-[6px] border-0 bg-ink px-[18px] py-4">
         <div className="font-narrow text-[11.5px] font-bold tracking-[0.1em] text-paper/45 uppercase">
           {COPY.eyebrow}
         </div>
@@ -36,7 +37,7 @@ export function RequestSent({ request, firstName }: Props) {
         <div className="mt-[5px] font-narrow text-[12.5px] text-paper/55">
           {COPY.quote}
         </div>
-      </div>
+      </Card>
 
       <div className="mt-4">
         <div className="font-narrow text-[11.5px] font-bold tracking-[0.1em] text-muted-foreground uppercase">

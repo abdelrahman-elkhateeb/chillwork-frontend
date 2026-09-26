@@ -1,3 +1,5 @@
+import { Avatar, AvatarFallback } from "@workspace/ui/components/avatar"
+
 import { BrandLogo } from "@/components/brand/brand-logo"
 
 function initials(name: string): string {
@@ -18,12 +20,11 @@ export function RequestHeader({ userName }: { userName: string }) {
           <span className="hidden font-narrow text-[13.5px] text-paper/60 sm:inline">
             {userName}
           </span>
-          <span
-            aria-hidden="true"
-            className="flex size-7 items-center justify-center rounded-full bg-paper/14 text-[12px] font-bold text-paper"
-          >
-            {initials(userName)}
-          </span>
+          <Avatar className="size-7 after:hidden">
+            <AvatarFallback className="bg-paper/14 text-[12px] font-bold text-paper">
+              {initials(userName)}
+            </AvatarFallback>
+          </Avatar>
         </div>
       </div>
     </header>

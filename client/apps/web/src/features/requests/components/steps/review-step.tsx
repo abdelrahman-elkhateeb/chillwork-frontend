@@ -1,5 +1,11 @@
 import { useFormContext, useWatch } from "react-hook-form"
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+} from "@workspace/ui/components/alert"
 import { Button } from "@workspace/ui/components/button"
+import { Card } from "@workspace/ui/components/card"
 import { cn } from "@workspace/ui/lib/utils"
 
 import { FormAlert } from "@/components/form/form-alert"
@@ -49,7 +55,7 @@ export function ReviewStep({
           isSending && "pointer-events-none opacity-45"
         )}
       >
-        <div className="flex items-start justify-between gap-3 rounded-[5px] bg-surface-sunken px-[13px] py-3">
+        <Card className="flex-row items-start justify-between gap-3 rounded-[5px] border-0 bg-surface-sunken px-[13px] py-3">
           <div className="min-w-0">
             <div className="text-[13.5px] font-semibold break-words">
               {address}
@@ -58,14 +64,15 @@ export function ReviewStep({
               {[directions, phone].filter(Boolean).join(" · ")}
             </div>
           </div>
-          <button
+          <Button
             type="button"
+            variant="link"
             onClick={onEditWhere}
-            className="shrink-0 font-narrow text-[12.5px] font-bold hover:text-primary-deep"
+            className="h-auto shrink-0 p-0 font-narrow text-[12.5px] font-bold text-foreground hover:text-primary-deep"
           >
             {COPY.edit}
-          </button>
-        </div>
+          </Button>
+        </Card>
 
         <ol className="mt-3 border-t border-secondary pt-1">
           {units.map((unit, index) => (
@@ -94,14 +101,17 @@ export function ReviewStep({
 
       {isSending ? (
         <>
-          <div className="mt-4 rounded-[4px] border border-l-[3px] border-border border-l-primary bg-surface-sunken px-[13px] py-3">
-            <div className="text-[13px] font-bold">
+          <Alert
+            role="status"
+            className="mt-4 border-l-primary bg-surface-sunken"
+          >
+            <AlertTitle className="text-[13px] font-bold">
               {REQUEST_COPY.sending.title}
-            </div>
-            <p className="mt-1 font-narrow text-[12.5px] leading-[1.5] text-muted-foreground">
+            </AlertTitle>
+            <AlertDescription className="font-narrow text-[12.5px] leading-[1.5]">
               {REQUEST_COPY.sending.description}
-            </p>
-          </div>
+            </AlertDescription>
+          </Alert>
           {idempotencyKey ? (
             <div className="mt-3.5 font-mono text-[11.5px] text-[#8A9093]">
               Idempotency-Key: {shortenKey(idempotencyKey)}

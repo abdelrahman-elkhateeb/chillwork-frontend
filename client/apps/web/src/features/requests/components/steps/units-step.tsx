@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useFieldArray, useFormContext, useWatch } from "react-hook-form"
 import { PlusIcon } from "lucide-react"
+import { Button } from "@workspace/ui/components/button"
 
 import { StepHeading } from "@/features/requests/components/shared/step-heading"
 import { RequestSummaryPanel } from "@/features/requests/components/units/request-summary-panel"
@@ -89,14 +90,15 @@ export function UnitsStep({ showErrors, onBack }: Props) {
         </ul>
 
         {fields.length < MAX_DEVICES_PER_REQUEST ? (
-          <button
+          <Button
             type="button"
+            variant="outline"
             onClick={addUnit}
-            className="mt-3.5 flex h-[52px] w-full items-center justify-center gap-[9px] rounded-[6px] border-[1.5px] border-dashed border-line-strong text-[14.5px] font-semibold text-foreground hover:border-primary hover:bg-card"
+            className="mt-3.5 h-[52px] w-full gap-[9px] rounded-[6px] border-[1.5px] border-dashed text-[14.5px] font-semibold hover:border-primary hover:bg-card"
           >
-            <PlusIcon className="size-4" />
+            <PlusIcon />
             {COPY.add}
-          </button>
+          </Button>
         ) : (
           <p className="mt-3.5 text-center font-narrow text-[13px] text-muted-foreground">
             A request can cover up to {MAX_DEVICES_PER_REQUEST} units.
