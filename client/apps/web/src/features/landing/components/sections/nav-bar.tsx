@@ -10,6 +10,7 @@ import { cn } from "@workspace/ui/lib/utils"
 
 import { BrandMark } from "@/components/brand/brand-logo"
 import { ROUTES } from "@/config/routes"
+import { useCurrentUser, UserMenu } from "@/features/auth"
 import { LandingContainer } from "@/features/landing/components/shared/landing-container"
 import {
   DEMO_HREF,
@@ -42,6 +43,10 @@ function MenuIcon({ open }: { open: boolean }) {
 export function NavBar() {
   const [open, setOpen] = useState(false)
   const close = () => setOpen(false)
+  // Nothing in the account slot until /auth/me answers, so a signed-in
+  // visitor never sees "Sign in" flash first.
+  const { user, isPending } = useCurrentUser()
+  const isGuest = !isPending && !user
 
   return (
     <Collapsible open={open} onOpenChange={setOpen} asChild>
@@ -74,32 +79,37 @@ export function NavBar() {
             ))}
           </nav>
 
-          <div className="hidden items-center gap-3.5 md:flex">
-            <Link
-              to={ROUTES.login}
-              className="px-0.5 py-[9px] text-[14px] font-medium text-paper/70 transition-colors hover:text-paper"
-            >
-              Sign in
-            </Link>
-            <Button
-              asChild
-              size="lg"
-              className="h-auto px-5 py-[11px] text-[14px] font-semibold"
-            >
-              <a href={DEMO_HREF}>Book a demo</a>
-            </Button>
-          </div>
+          <div className="flex items-center gap-3.5">
+            {user ? <UserMenu user={user} /> : null}
+            {isGuest ? (
+              <div className="hidden items-center gap-3.5 md:flex">
+                <Link
+                  to={ROUTES.login}
+                  className="px-0.5 py-[9px] text-[14px] font-medium text-paper/70 transition-colors hover:text-paper"
+                >
+                  Sign in
+                </Link>
+                <Button
+                  asChild
+                  size="lg"
+                  className="h-auto px-5 py-[11px] text-[14px] font-semibold"
+                >
+                  <a href={DEMO_HREF}>Book a demo</a>
+                </Button>
+              </div>
+            ) : null}
 
-          <CollapsibleTrigger asChild>
-            <Button
-              variant="ghost"
-              size="icon"
-              aria-label={open ? "Close menu" : "Open menu"}
-              className="-mr-3 size-11 hover:bg-transparent aria-expanded:bg-transparent md:hidden"
-            >
-              <MenuIcon open={open} />
-            </Button>
-          </CollapsibleTrigger>
+            <CollapsibleTrigger asChild>
+              <Button
+                variant="ghost"
+                size="icon"
+                aria-label={open ? "Close menu" : "Open menu"}
+                className="-mr-3 size-11 hover:bg-transparent aria-expanded:bg-transparent md:hidden"
+              >
+                <MenuIcon open={open} />
+              </Button>
+            </CollapsibleTrigger>
+          </div>
         </LandingContainer>
 
         <CollapsibleContent className="border-t border-paper/10 bg-ink md:hidden">
@@ -114,18 +124,22 @@ export function NavBar() {
                 {link.label}
               </a>
             ))}
-            <Link
-              to={ROUTES.login}
-              onClick={close}
-              className="py-3.5 text-[15px] font-medium text-paper/80"
-            >
-              Sign in
-            </Link>
-            <Button asChild size="xl" className="my-2">
-              <a href={DEMO_HREF} onClick={close}>
-                Book a demo
-              </a>
-            </Button>
+            {isGuest ? (
+              <>
+                <Link
+                  to={ROUTES.login}
+                  onClick={close}
+                  className="py-3.5 text-[15px] font-medium text-paper/80"
+                >
+                  Sign in
+                </Link>
+                <Button asChild size="xl" className="my-2">
+                  <a href={DEMO_HREF} onClick={close}>
+                    Book a demo
+                  </a>
+                </Button>
+              </>
+            ) : null}
           </LandingContainer>
         </CollapsibleContent>
       </header>

@@ -61,7 +61,7 @@ export function NewRequestPage() {
 
   return (
     <div className="min-h-svh bg-background text-foreground">
-      <RequestHeader userName={user.name} />
+      <RequestHeader user={user} />
       {user.role === "CUSTOMER" ? (
         <NewRequestFlow user={user} />
       ) : (

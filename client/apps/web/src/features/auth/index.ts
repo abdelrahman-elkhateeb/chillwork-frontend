@@ -5,6 +5,7 @@ export {
   PHONE_PATTERN,
   PHONE_SEPARATORS,
 } from "@/features/auth/constants/auth-validation.constants"
+export { UserMenu } from "@/features/auth/components/user/user-menu"
 export { GuestOnly } from "@/features/auth/guards/guest-only"
 export { RequireAuth } from "@/features/auth/guards/require-auth"
 export { useCurrentUser } from "@/features/auth/hooks/use-current-user"
