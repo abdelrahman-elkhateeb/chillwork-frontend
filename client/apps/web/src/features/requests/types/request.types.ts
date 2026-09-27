@@ -22,7 +22,6 @@ export type CreateServiceRequestDeviceBody = {
   model?: string
   /** Sent exactly as typed — the API stores it byte-for-byte. */
   originalDescription: string
-  photoIds: string[]
 }
 
 export type CreateServiceRequestBody = {

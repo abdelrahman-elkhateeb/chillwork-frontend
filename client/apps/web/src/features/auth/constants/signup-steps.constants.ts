@@ -9,7 +9,7 @@ export const SIGNUP_STEPS: readonly SignupStep[] = [
   {
     title: "Tell us what is wrong",
     description:
-      "Add photos of every unit you want checked, not just the noisy one.",
+      "Describe every unit you want checked, not just the noisy one.",
   },
   {
     title: "Pick your visit",

@@ -19,9 +19,6 @@ export function toCreateRequestBody(
       brand: device.brand || undefined,
       model: device.model || undefined,
       originalDescription: device.originalDescription,
-      // Photo uploads (FS13) don't exist on the API yet; it rejects any
-      // non-empty list with PHOTO_NOT_AVAILABLE.
-      photoIds: [],
     })),
   }
 }

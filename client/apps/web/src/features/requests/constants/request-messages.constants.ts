@@ -12,11 +12,6 @@ export const REQUEST_ALERTS = {
     description:
       "Your details are still here. Submit again. It won't be sent twice.",
   },
-  photosUnavailable: {
-    tone: "error",
-    title: "Photos can't be attached yet",
-    description: "Remove the photos and submit the request again.",
-  },
   customersOnly: {
     tone: "error",
     title: "Only customer accounts can request service",

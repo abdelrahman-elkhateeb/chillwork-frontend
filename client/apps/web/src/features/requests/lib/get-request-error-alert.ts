@@ -27,8 +27,6 @@ export function getRequestErrorAlert(
       return REQUEST_ALERTS.inProgress
     case API_ERROR_CODES.REQUEST_CREATION_FAILED:
       return withRequestId(REQUEST_ALERTS.creationFailed, error.requestId)
-    case API_ERROR_CODES.PHOTO_NOT_AVAILABLE:
-      return REQUEST_ALERTS.photosUnavailable
     case API_ERROR_CODES.FORBIDDEN:
       return REQUEST_ALERTS.customersOnly
     case API_ERROR_CODES.RATE_LIMITED:
