@@ -3,9 +3,21 @@
   "configurations": [
     {
       "name": "web",
-      "runtimeExecutable": "pnpm",
-      "runtimeArgs": ["--dir", "client/apps/web", "dev", "--port", "5173", "--strictPort"],
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "client/apps/web", "run", "dev", "--", "--port", "5173", "--strictPort"],
       "port": 5173
+    },
+    {
+      "name": "dashboard",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "client/apps/dashboard", "run", "dev", "--", "--port", "5174", "--strictPort"],
+      "port": 5174
+    },
+    {
+      "name": "design",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["C:\\Users\\ABDELR~1\\AppData\\Local\\Temp\\claude\\D--github-projects-chillwork-frontend\\593d321c-26ba-40a5-b7a3-107d602c32bf\\scratchpad\\serve.js", "C:\\Users\\ABDELR~1\\AppData\\Local\\Temp\\claude\\D--github-projects-chillwork-frontend\\593d321c-26ba-40a5-b7a3-107d602c32bf\\scratchpad\\design2"],
+      "port": 4599
     },
     {
       "name": "api",
