@@ -1,8 +1,20 @@
 export type FieldErrors = Record<string, string[]>
 
+export type PageMeta = {
+  page: number
+  pageSize: number
+  total: number
+}
+
 export type ApiSuccess<T> = {
   data: T
-  meta?: Record<string, unknown>
+  meta?: PageMeta
+}
+
+/** A paginated list: the rows plus the envelope's `meta`. */
+export type Page<T> = {
+  items: T[]
+  meta: PageMeta
 }
 
 export type ApiFailure = {
@@ -29,3 +41,5 @@ export type RequestOptions = {
    */
   skipAuthRefresh?: boolean
 }
+
+export type QueryParams = Record<string, string | number | boolean | undefined>

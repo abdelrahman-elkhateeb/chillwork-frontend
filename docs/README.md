@@ -20,7 +20,7 @@ The customer-facing web app for ChillWork: a marketing landing page, login/signu
 
 | Concern         | Tool                                                                |
 | --------------- | ------------------------------------------------------------------- |
-| Monorepo        | pnpm workspaces + Turborepo                                         |
+| Monorepo        | npm workspaces + Turborepo                                          |
 | Build / dev     | Vite 8, TypeScript 6                                                |
 | UI              | React 19, shadcn/ui (`radix-nova` style), Radix UI, lucide-react    |
 | Styling         | Tailwind CSS v4 (CSS-first config, design tokens as CSS variables)  |
@@ -29,7 +29,7 @@ The customer-facing web app for ChillWork: a marketing landing page, login/signu
 | Forms           | react-hook-form + zod (via `@hookform/resolvers`)                   |
 | Lint / format   | ESLint 10 (typescript-eslint, react-hooks, react-refresh), Prettier |
 
-Requirements: **Node ≥ 20** and **pnpm 10** (`packageManager: pnpm@10.33.4`).
+Requirements: **Node ≥ 20** and **npm 11** (`packageManager: npm@11.17.0`).
 
 ---
 
@@ -39,7 +39,7 @@ All commands run from the `client/` directory.
 
 ```bash
 cd client
-pnpm install
+npm install
 ```
 
 Create the web app's env file and point it at your running API:
@@ -55,22 +55,22 @@ cp apps/web/.env.example apps/web/.env
 Start the dev server (http://localhost:5173):
 
 ```bash
-pnpm dev
+npm run dev
 ```
 
 ### Scripts
 
 Run from `client/` — Turbo fans them out to every workspace:
 
-| Script           | What it does                                   |
-| ---------------- | ---------------------------------------------- |
-| `pnpm dev`       | Vite dev server for `apps/web`                 |
-| `pnpm build`     | `tsc -b && vite build` → `apps/web/dist`       |
-| `pnpm lint`      | ESLint across all packages                     |
-| `pnpm typecheck` | `tsc --noEmit` across all packages             |
-| `pnpm format`    | Prettier (with Tailwind class sorting)         |
+| Script              | What it does                                   |
+| ------------------- | ---------------------------------------------- |
+| `npm run dev`       | Vite dev server for `apps/web`                 |
+| `npm run build`     | `tsc -b && vite build` → `apps/web/dist`       |
+| `npm run lint`      | ESLint across all packages                     |
+| `npm run typecheck` | `tsc --noEmit` across all packages             |
+| `npm run format`    | Prettier (with Tailwind class sorting)         |
 
-`apps/web` also has `pnpm --dir apps/web preview` to serve a production build locally.
+`apps/web` also has `npm run preview -w web` to serve a production build locally.
 
 ---
 
@@ -79,9 +79,9 @@ Run from `client/` — Turbo fans them out to every workspace:
 ```
 chillwork-frontend/
 ├── docs/                      ← you are here
-└── client/                    ← the pnpm/Turbo monorepo
+└── client/                    ← the npm/Turbo monorepo
     ├── turbo.json
-    ├── pnpm-workspace.yaml
+    ├── package.json           ← npm workspaces config
     ├── apps/
     │   └── web/               ← the React app
     │       ├── .env.example
@@ -139,7 +139,7 @@ Current features:
 | `landing` | `/`                  | Marketing page built from `sections/`; all copy and data live in `constants/*.constants.ts`   |
 | `auth`    | `/login`, `/signup`  | Forms, guards, current-user query, session handling                                            |
 | `account` | `/account`           | Signed-in profile view + logout                                                                |
-| `requests`| `/requests/new`      | Customer service request: 3 steps (where → units → check and send), `POST /requests`          |
+| `requests`| `/requests`, `/requests/new`, `/requests/:requestId` | The customer's home: her requests (FS16), the 3-step new request (FS15), and one request with its timeline |
 
 ### Query client defaults
 
@@ -156,7 +156,10 @@ Current features:
 Paths are defined once in `src/config/routes.ts` — always use `ROUTES.*`, never string literals.
 
 ```ts
-ROUTES = { home: "/", login: "/login", signup: "/signup", account: "/account" }
+ROUTES = { home: "/", login: "/login", signup: "/signup", account: "/account",
+  requests: "/requests", newRequest: "/requests/new", request: "/requests/:requestId" }
+
+pathTo(ROUTES.request, { requestId }) // fills :params
 ```
 
 `src/app/router.tsx`:
@@ -167,7 +170,9 @@ ROUTES = { home: "/", login: "/login", signup: "/signup", account: "/account" }
 | `/login`   | `GuestOnly`   | `LoginPage`   |
 | `/signup`  | `GuestOnly`   | `SignupPage`  |
 | `/account` | `RequireAuth` | `AccountPage` |
+| `/requests` | `RequireAuth` | `MyRequestsPage` (customers only; staff see a notice) |
 | `/requests/new` | `RequireAuth` | `NewRequestPage` (customers only; staff see a notice) |
+| `/requests/:requestId` | `RequireAuth` | `RequestPage` (customers only; staff see a notice) |
 | `*`        | —             | redirect to `/` |
 
 **Guards** (`features/auth/guards/`) are layout routes rendering `<Outlet />`:
@@ -182,9 +187,10 @@ Some pages accept typed `location.state`:
 | Page       | Type                    | Fields                                             |
 | ---------- | ----------------------- | -------------------------------------------------- |
 | `/login`   | `LoginLocationState`    | `from`, `email` (prefill), `justRegistered`        |
-| `/account` | `AccountLocationState`  | `welcome` (show greeting after signup)             |
+| `/requests` | `MyRequestsLocationState` | `welcome` (show greeting after signup)           |
+| `/requests/new` | `ReportAgainState`  | `reportAgain` (prefill one unit, see below)        |
 
-`location.state` is user-controllable, so it's always parsed defensively (`readLoginLocationState`). `getPostLoginPath` only honours same-app paths (`/…`, not `//…`, not auth pages) to prevent open redirects; the fallback is `/account`.
+`location.state` is user-controllable, so it's always parsed defensively (`readLoginLocationState`). `getPostLoginPath` only honours same-app paths (`/…`, not `//…`, not auth pages) to prevent open redirects; the fallback is `/requests`.
 
 ---
 
@@ -212,10 +218,11 @@ Lives in `src/lib/api/`.
 ### `httpClient`
 
 ```ts
-import { httpClient } from "@/lib/api/http-client"
+import { httpClient, withQuery } from "@/lib/api/http-client"
 
 const user = await httpClient.get<CurrentUserResponse>("/auth/me", { signal })
 await httpClient.post<LoginResponse>("/auth/login", body, { skipAuthRefresh: true })
+const { items, meta } = await httpClient.getPage<Row>(withQuery("/requests", { page }))
 ```
 
 - Returns the envelope's `data`, or throws an `ApiError`.
@@ -265,7 +272,7 @@ type AuthUser = {
 
 - **Login** — `useLogin()` posts credentials and writes the returned user into the current-user cache. The page then navigates to `getPostLoginPath(state)`.
 - **Signup** — the API's register endpoint doesn't open a session, so `useSignup()` registers **then** logs in with the same credentials. Result: `{ user, signedIn }`.
-  - `signedIn: true` → `/account` with `{ welcome: true }`.
+  - `signedIn: true` → `/requests` with `{ welcome: true }`.
   - `signedIn: false` (account created, login failed, e.g. rate-limited) → `/login` with the email prefilled and a "just registered" notice.
 - **Logout** — `useLogout()` posts `/auth/logout` and then does a **full page load** to `/` on either outcome, which wipes all in-memory user data and avoids a guard/navigation race.
 
@@ -277,6 +284,16 @@ type AuthUser = {
 - **The customer never sees AI output.** The response has none; the sending state just says what is happening.
 - **Draft:** the form is saved to `sessionStorage` per user as it's typed ("Saved as you type") and cleared on success.
 - **API gaps the UI works around:** there's no "how to find you" field, so it's appended to `address` after ` — `; photos are hidden until FS13 exists (the API rejects any `photoIds`).
+
+### My requests and one request (FS16)
+
+`GET /requests?page=&pageSize=`, `GET /requests/:id`, `GET /requests/:id/timeline` — `requestsApi.list/get/timeline`, hooks in `hooks/use-my-requests.ts` (`useMyRequests(page)`, `useMyRequest(id)`, `useRequestTimeline(id)`). Keys: `requestKeys.list(page)`, `.detail(id)`, `.timeline(id)`; creating a request invalidates `requestKeys.all`.
+
+- **List (`/requests`)** — newest first, 10 per page, `?page=` in the URL. The newest request that isn't finished gets a card with the technician's name and slot (it reads the detail query, so opening it is instant); the rest are one line each.
+- **Detail (`/requests/:requestId`)** — unit by unit (what she said, the result, why not), the bill once an invoice exists, and the timeline. A 404 (not hers, gone, or a malformed id) shows "No such request" and isn't retried.
+- **Timeline** — only the five event types the API returns, worded for her (`lib/request-display.ts`). Nothing is invented: there is no "parts approved" or per-unit event, so unit results appear on the "finished the visit" line.
+- **Report again** — an unfixed unit links to `/requests/new` with `ReportAgainState`: the address, phone and that unit (label, brand, model) are prefilled and the flow opens on the units step. An unsent draft is kept and the unit is added to it. The state is cleared after it's read, so a reload doesn't add the unit twice.
+- **API gaps the UI works around:** the customer invoice is a summary only (itemized is FS27), so the bill lists fixed units by name with the total; the technician's notes and phone aren't returned, and no cancel exists yet (FS20).
 
 ### Error messages
 
@@ -320,12 +337,14 @@ import { cn } from "@workspace/ui/lib/utils"
 import "@workspace/ui/globals.css" // done once in main.tsx
 ```
 
-Available today: `alert`, `badge`, `button`, `card`, `collapsible`, `field`, `input`, `label`, `separator`, `spinner`.
+Available today: `alert`, `alert-dialog`, `avatar`, `badge`, `button`, `card`, `collapsible`, `dropdown-menu`, `field`, `input`, `label`, `native-select`, `separator`, `skeleton`, `spinner`, `table`, `tabs`, `textarea`.
+
+Shared state blocks live in the app at `src/components/states/` (the "Loading, empty, error & 404" board): `EmptyState`, `ErrorState` (shows the short request id), `NotFoundState`, `Pager`, `CardListSkeleton` / `DetailSkeleton`.
 
 Add a new shadcn component (run in `client/`) — it lands in `packages/ui/src/components`:
 
 ```bash
-pnpm dlx shadcn@latest add dialog -c apps/web
+npx shadcn@latest add dialog -c apps/web
 ```
 
 ### Design tokens
@@ -352,7 +371,7 @@ Use tokens (`bg-card`, `text-muted-foreground`, `text-primary-deep`) rather than
 - **Types:** `type` aliases, strict TS (`noUnusedLocals`, `noUnusedParameters`, `erasableSyntaxOnly` — so no `enum`s; use `as const` objects).
 - **Formatting (Prettier):** no semicolons, double quotes, 2-space indent, trailing commas (es5), 80 cols, LF line endings, Tailwind classes auto-sorted (also inside `cn()` / `cva()`).
 - **Comments** explain *why* (constraints, API quirks, race conditions), not what.
-- Before committing: `pnpm lint && pnpm typecheck`.
+- Before committing: `npm run lint && npm run typecheck`.
 
 ---
 

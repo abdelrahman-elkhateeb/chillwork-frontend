@@ -4,7 +4,11 @@ import { ROUTES } from "@/config/routes"
 import { AccountPage } from "@/features/account"
 import { GuestOnly, LoginPage, RequireAuth, SignupPage } from "@/features/auth"
 import { LandingPage } from "@/features/landing"
-import { NewRequestPage } from "@/features/requests"
+import {
+  MyRequestsPage,
+  NewRequestPage,
+  RequestPage,
+} from "@/features/requests"
 
 export const router = createBrowserRouter([
   { path: ROUTES.home, element: <LandingPage /> },
@@ -19,7 +23,9 @@ export const router = createBrowserRouter([
     element: <RequireAuth />,
     children: [
       { path: ROUTES.account, element: <AccountPage /> },
+      { path: ROUTES.requests, element: <MyRequestsPage /> },
       { path: ROUTES.newRequest, element: <NewRequestPage /> },
+      { path: ROUTES.request, element: <RequestPage /> },
     ],
   },
   { path: "*", element: <Navigate to={ROUTES.home} replace /> },

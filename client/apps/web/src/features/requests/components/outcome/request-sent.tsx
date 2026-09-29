@@ -3,7 +3,7 @@ import { CheckIcon } from "lucide-react"
 import { Button } from "@workspace/ui/components/button"
 import { Card } from "@workspace/ui/components/card"
 
-import { ROUTES } from "@/config/routes"
+import { ROUTES, pathTo } from "@/config/routes"
 import { REQUEST_COPY } from "@/features/requests/constants/request-copy.constants"
 import type { CreatedServiceRequest } from "@/features/requests/types/request.types"
 
@@ -52,7 +52,9 @@ export function RequestSent({ request, firstName }: Props) {
         asChild
         className="mt-[18px] h-[46px] w-full rounded-[var(--radius-control)] text-[14.5px] font-semibold"
       >
-        <Link to={ROUTES.account}>{COPY.done}</Link>
+        <Link to={pathTo(ROUTES.request, { requestId: request.requestId })}>
+          {COPY.done}
+        </Link>
       </Button>
     </div>
   )

@@ -51,3 +51,11 @@ export function isApiError(error: unknown): error is ApiError {
 export function isUnauthorizedError(error: unknown): boolean {
   return isApiError(error) && error.status === 401
 }
+
+export function isNotFoundError(error: unknown): boolean {
+  return isApiError(error) && error.status === 404
+}
+
+export function hasErrorCode(error: unknown, code: string): boolean {
+  return isApiError(error) && error.code === code
+}

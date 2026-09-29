@@ -1,26 +1,26 @@
-import { useState, type FormEvent } from "react"
+import { useEffect, useState, type FormEvent } from "react"
 import { FormProvider, useForm, type FieldErrors } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Link } from "react-router-dom"
-import { Button } from "@workspace/ui/components/button"
+import { useLocation, useNavigate } from "react-router-dom"
 
-import { FormAlert } from "@/components/form/form-alert"
 import { applyServerFieldErrors } from "@/lib/forms/apply-server-field-errors"
 import { isApiError } from "@/lib/api/api-error"
-import { ROUTES } from "@/config/routes"
-import { useCurrentUser, type AuthUser } from "@/features/auth"
-import { RequestHeader } from "@/features/requests/components/layout/request-header"
+import type { AuthUser } from "@/features/auth"
+import { CustomerFrame } from "@/features/requests/components/layout/customer-frame"
 import { RequestStepper } from "@/features/requests/components/layout/request-stepper"
 import { RequestSent } from "@/features/requests/components/outcome/request-sent"
 import { ReviewStep } from "@/features/requests/components/steps/review-step"
 import { UnitsStep } from "@/features/requests/components/steps/units-step"
 import { WhereStep } from "@/features/requests/components/steps/where-step"
-import { REQUEST_ALERTS } from "@/features/requests/constants/request-messages.constants"
 import { useCreateServiceRequest } from "@/features/requests/hooks/use-create-service-request"
 import { useRequestDraftAutosave } from "@/features/requests/hooks/use-request-draft-autosave"
 import { createEmptyDevice } from "@/features/requests/lib/create-empty-device"
 import { getRequestErrorAlert } from "@/features/requests/lib/get-request-error-alert"
 import { getRequestFieldPaths } from "@/features/requests/lib/request-field-paths"
+import {
+  readReportAgainState,
+  withReportedAgainUnit,
+} from "@/features/requests/lib/report-again"
 import {
   clearRequestDraft,
   readRequestDraft,
@@ -52,37 +52,37 @@ function stepForErrors(fields: readonly string[]): RequestStepIndex {
 }
 
 export function NewRequestPage() {
-  const { user } = useCurrentUser()
-
-  // Rendered behind RequireAuth, so this only guards the type.
-  if (!user) {
-    return null
-  }
-
   return (
-    <div className="min-h-svh bg-background text-foreground">
-      <RequestHeader user={user} />
-      {user.role === "CUSTOMER" ? (
-        <NewRequestFlow user={user} />
-      ) : (
-        <main className="mx-auto max-w-[560px] px-4 py-10">
-          <FormAlert {...REQUEST_ALERTS.customersOnly} />
-          <Button asChild variant="outline" className="mt-4 h-[42px] w-full">
-            <Link to={ROUTES.account}>Back to your account</Link>
-          </Button>
-        </main>
-      )}
-    </div>
+    <CustomerFrame>{(user) => <NewRequestFlow user={user} />}</CustomerFrame>
   )
 }
 
 function NewRequestFlow({ user }: { user: AuthUser }) {
-  const [step, setStep] = useState<RequestStepIndex>(0)
+  const location = useLocation()
+  const navigate = useNavigate()
+  // Reporting a unit again: where and who are already known, so she
+  // starts on the unit that needs a fresh description.
+  const [step, setStep] = useState<RequestStepIndex>(() =>
+    readReportAgainState(location.state) ? 1 : 0
+  )
   const [showUnitErrors, setShowUnitErrors] = useState(false)
   const [fieldErrorsShown, setFieldErrorsShown] = useState(false)
-  const [initialValues] = useState(
-    () => readRequestDraft(user.id) ?? emptyRequest(user.phone)
-  )
+  const [initialValues] = useState(() => {
+    const draft = readRequestDraft(user.id)
+    const reportAgain = readReportAgainState(location.state)
+    if (reportAgain) {
+      return withReportedAgainUnit(draft, reportAgain)
+    }
+    return draft ?? emptyRequest(user.phone)
+  })
+
+  // The unit is in the form (and the autosaved draft) now; a reload must
+  // not add it a second time.
+  useEffect(() => {
+    if (readReportAgainState(location.state)) {
+      navigate(location.pathname, { replace: true, state: null })
+    }
+  }, [location.pathname, location.state, navigate])
 
   const create = useCreateServiceRequest()
   const form = useForm<

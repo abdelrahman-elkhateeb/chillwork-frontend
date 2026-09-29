@@ -33,5 +33,5 @@ export function getPostLoginPath(state: LoginLocationState): string {
     return from
   }
 
-  return ROUTES.account
+  return ROUTES.requests
 }

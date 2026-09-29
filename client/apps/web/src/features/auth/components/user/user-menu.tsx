@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import { LogOutIcon, PlusIcon, UserIcon } from "lucide-react"
+import { ListIcon, LogOutIcon, PlusIcon, UserIcon } from "lucide-react"
 import { Button } from "@workspace/ui/components/button"
 import {
   DropdownMenu,
@@ -43,6 +43,14 @@ export function UserMenu({ user }: { user: AuthUser }) {
           </span>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
+        {user.role === "CUSTOMER" ? (
+          <DropdownMenuItem asChild>
+            <Link to={ROUTES.requests}>
+              <ListIcon />
+              My requests
+            </Link>
+          </DropdownMenuItem>
+        ) : null}
         <DropdownMenuItem asChild>
           <Link to={ROUTES.account}>
             <UserIcon />

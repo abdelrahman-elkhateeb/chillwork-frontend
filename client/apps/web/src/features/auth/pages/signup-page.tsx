@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom"
 
 import { ROUTES } from "@/config/routes"
-import type { AccountLocationState } from "@/features/account"
+import type { MyRequestsLocationState } from "@/features/requests"
 import { AuthLayout } from "@/features/auth/components/layout/auth-layout"
 import { SignupAside } from "@/features/auth/components/signup/signup-aside"
 import { SignupForm } from "@/features/auth/components/signup/signup-form"
@@ -14,8 +14,8 @@ export function SignupPage() {
 
   const handleSuccess = ({ user, signedIn }: SignupResult) => {
     if (signedIn) {
-      const state: AccountLocationState = { welcome: true }
-      navigate(ROUTES.account, { replace: true, state })
+      const state: MyRequestsLocationState = { welcome: true }
+      navigate(ROUTES.requests, { replace: true, state })
       return
     }
 

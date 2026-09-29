@@ -6,8 +6,11 @@ export { useCreateServiceRequest } from "@/features/requests/hooks/use-create-se
 export { createEmptyDevice } from "@/features/requests/lib/create-empty-device"
 export { getRequestErrorAlert } from "@/features/requests/lib/get-request-error-alert"
 export { getRequestFieldPaths } from "@/features/requests/lib/request-field-paths"
+export { MyRequestsPage } from "@/features/requests/pages/my-requests-page"
 export { NewRequestPage } from "@/features/requests/pages/new-request-page"
+export { RequestPage } from "@/features/requests/pages/request-page"
 export { createRequestSchema } from "@/features/requests/schemas/create-request.schema"
+export type { MyRequestsLocationState } from "@/features/requests/types/customer-request.types"
 export type {
   CreateRequestFormInput,
   CreateRequestFormValues,

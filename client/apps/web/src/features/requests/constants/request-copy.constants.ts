@@ -66,7 +66,7 @@ export const REQUEST_COPY = {
     nextTitle: "What happens next",
     nextBody:
       "We read what you told us and pick the right technician, then you get the slot and his name before he sets off.",
-    done: "Back to your account",
+    done: "Follow this request",
   },
   failed: {
     stillHere: "Still here, exactly as you left it",

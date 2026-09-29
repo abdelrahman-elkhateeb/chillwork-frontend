@@ -3,6 +3,8 @@ import { API_BASE_URL, REQUEST_ID_HEADER } from "@/lib/api/api.constants"
 import type {
   ApiFailure,
   ApiSuccess,
+  Page,
+  QueryParams,
   RequestOptions,
 } from "@/lib/api/api.types"
 import { refreshSession } from "@/lib/api/refresh-session"
@@ -42,11 +44,11 @@ function isFailureBody(body: unknown): body is ApiFailure {
   return typeof body === "object" && body !== null && "error" in body
 }
 
-async function unwrap<T>(response: Response): Promise<T> {
+async function unwrap<T>(response: Response): Promise<ApiSuccess<T>> {
   const body = await readJson(response)
 
   if (response.ok) {
-    return (body as ApiSuccess<T>).data
+    return body as ApiSuccess<T>
   }
 
   if (isFailureBody(body)) {
@@ -61,15 +63,10 @@ async function unwrap<T>(response: Response): Promise<T> {
   )
 }
 
-/**
- * Sends a request to the API and returns the envelope's `data`, or throws
- * an `ApiError` built from its `error`. An expired access cookie gets one
- * transparent refresh-and-retry.
- */
-export async function request<T>(
+async function requestEnvelope<T>(
   path: string,
   options: RequestOptions = {}
-): Promise<T> {
+): Promise<ApiSuccess<T>> {
   let response = await send(path, options)
 
   if (response.status === 401 && !options.skipAuthRefresh) {
@@ -82,11 +79,58 @@ export async function request<T>(
   return unwrap<T>(response)
 }
 
+/**
+ * Sends a request to the API and returns the envelope's `data`, or throws
+ * an `ApiError` built from its `error`. An expired access cookie gets one
+ * transparent refresh-and-retry.
+ */
+export async function request<T>(
+  path: string,
+  options: RequestOptions = {}
+): Promise<T> {
+  const envelope = await requestEnvelope<T>(path, options)
+  return envelope.data
+}
+
+/** `?a=1&b=x` from the defined, non-empty params only. */
+export function withQuery(path: string, params: QueryParams = {}): string {
+  const search = new URLSearchParams()
+  for (const [key, value] of Object.entries(params)) {
+    if (value !== undefined && value !== "") {
+      search.set(key, String(value))
+    }
+  }
+  const query = search.toString()
+  return query ? `${path}?${query}` : path
+}
+
 type BodylessOptions = Omit<RequestOptions, "method" | "body">
 
 export const httpClient = {
   get: <T>(path: string, options?: BodylessOptions) =>
     request<T>(path, { ...options, method: "GET" }),
+
+  /** A paginated list — keeps the envelope's `meta` next to the rows. */
+  getPage: async <T>(
+    path: string,
+    options?: BodylessOptions
+  ): Promise<Page<T>> => {
+    const { data, meta } = await requestEnvelope<T[]>(path, {
+      ...options,
+      method: "GET",
+    })
+    return {
+      items: data,
+      meta: meta ?? { page: 1, pageSize: data.length, total: data.length },
+    }
+  },
+
   post: <T>(path: string, body?: unknown, options?: BodylessOptions) =>
     request<T>(path, { ...options, method: "POST", body }),
+
+  put: <T>(path: string, body?: unknown, options?: BodylessOptions) =>
+    request<T>(path, { ...options, method: "PUT", body }),
+
+  patch: <T>(path: string, body?: unknown, options?: BodylessOptions) =>
+    request<T>(path, { ...options, method: "PATCH", body }),
 }
