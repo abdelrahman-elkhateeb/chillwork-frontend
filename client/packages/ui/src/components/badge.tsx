@@ -21,6 +21,10 @@ const badgeVariants = cva(
           "border-destructive/35 bg-destructive/[0.07] text-[#8E1913]",
         /** Blocked or excluded — the hatched red mark. */
         blocked: "border-destructive/40 bg-hatch text-[#8E1913]",
+        /** The one status that is the viewer's job to clear — orange. */
+        attention: "border-primary/40 bg-primary/13 text-primary-deep",
+        /** Out of play but not an error (cancelled, stopped) — grey hatch. */
+        excluded: "border-line-strong bg-hatch-muted text-muted-foreground",
       },
     },
     defaultVariants: {

@@ -164,6 +164,15 @@
   );
 }
 
+/* The neutral hatch: locked, taken or out of play — not an error. */
+@utility bg-hatch-muted {
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgb(95 101 104 / 0.12) 0 5px,
+    transparent 5px 10px
+  );
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
