@@ -1,5 +1,6 @@
 import { Link, useNavigate } from "react-router-dom"
 import { Button } from "@workspace/ui/components/button"
+import { cn } from "@workspace/ui/lib/utils"
 
 import { FormAlert } from "@/components/form/form-alert"
 import { SubmitButton } from "@/components/form/submit-button"
@@ -18,6 +19,7 @@ type Props = {
   visit: VisitDetail
   /** Units still without an outcome (only known once the visit started). */
   unitsWithoutOutcome: number
+  className?: string
 }
 
 function DisabledAction({ children }: { children: string }) {
@@ -36,7 +38,7 @@ function DisabledAction({ children }: { children: string }) {
  * The buttons come from `allowedActions` — the phone never decides. A
  * disallowed action is greyed, not hidden, so he can see what comes next.
  */
-export function VisitActions({ visit, unitsWithoutOutcome }: Props) {
+export function VisitActions({ visit, unitsWithoutOutcome, className }: Props) {
   const navigate = useNavigate()
   const start = useStartVisit(visit.id)
   const complete = useCompleteVisit(visit.id)
@@ -50,7 +52,7 @@ export function VisitActions({ visit, unitsWithoutOutcome }: Props) {
   )
 
   return (
-    <section className="mt-4">
+    <section className={cn("mt-4", className)}>
       <Eyebrow className="tracking-[0.1em]">What you can do now</Eyebrow>
 
       {failure && !incomplete ? (

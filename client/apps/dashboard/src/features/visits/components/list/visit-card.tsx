@@ -38,22 +38,24 @@ export function VisitCard({
 
   if (featured) {
     return (
-      <Card className="gap-0 rounded-[6px] border-l-[3px] border-l-primary px-[15px] py-3.5">
-        <div className="flex items-center justify-between">
-          <span className="font-narrow text-[11.5px] font-bold tracking-[0.08em] text-primary-deep uppercase">
-            {featuredLabel}
-          </span>
-          <span className="font-mono text-[12.5px] font-semibold">{time}</span>
+      // Across the whole row from `lg`, with the buttons moved to the right.
+      <Card className="gap-0 rounded-[6px] border-l-[3px] border-l-primary px-[15px] py-3.5 lg:col-span-full lg:flex-row lg:items-end lg:gap-6 lg:px-5 lg:py-4">
+        <div className="min-w-0 lg:flex-1">
+          <div className="flex items-center justify-between lg:justify-start lg:gap-3">
+            <span className="font-narrow text-[11.5px] font-bold tracking-[0.08em] text-primary-deep uppercase">
+              {featuredLabel}
+            </span>
+            <span className="font-mono text-[12.5px] font-semibold">
+              {time}
+            </span>
+          </div>
+          <div className="mt-2 text-[17px] font-bold">{customer}</div>
+          <div className="mt-[3px] truncate font-narrow text-[13.5px] text-muted-foreground">
+            {subtitle(visit)}
+          </div>
         </div>
-        <div className="mt-2 text-[17px] font-bold">{customer}</div>
-        <div className="mt-[3px] truncate font-narrow text-[13.5px] text-muted-foreground">
-          {subtitle(visit)}
-        </div>
-        <div className="mt-3 flex gap-2">
-          <Button
-            asChild
-            className="h-12 flex-1 text-[14.5px] font-semibold"
-          >
+        <div className="mt-3 flex gap-2 lg:mt-0 lg:w-[300px] lg:shrink-0">
+          <Button asChild className="h-12 flex-1 text-[14.5px] font-semibold">
             <Link to={href}>Open visit</Link>
           </Button>
           {visit.customer.phone ? (
@@ -77,7 +79,7 @@ export function VisitCard({
     <Link to={href} className="block">
       <Card
         className={cn(
-          "gap-0 rounded-[6px] px-[15px] py-[13px] transition-colors hover:border-line-strong",
+          "h-full gap-0 rounded-[6px] px-[15px] py-[13px] transition-colors hover:border-line-strong",
           visit.status === "CANCELLED" && "opacity-70"
         )}
       >

@@ -7,7 +7,8 @@ import { ROUTES, pathTo } from "@/config/routes"
 import { isNotFoundError } from "@/lib/api/api-error"
 import { unitName } from "@/features/visits/lib/unit-name"
 import { OutcomeForm } from "@/features/visits/components/outcome/outcome-form"
-import { PhoneHeader } from "@/features/visits/components/shared/phone-header"
+import { ScreenBody } from "@/features/visits/components/shared/screen-body"
+import { ScreenHeader } from "@/features/visits/components/shared/screen-header"
 import { VisitNotFound } from "@/features/visits/components/shared/visit-not-found"
 import {
   useVisit,
@@ -27,10 +28,10 @@ export function OutcomePage() {
   if (visit.isPending || parts.isPending || results.isPending) {
     return (
       <>
-        <PhoneHeader backTo={backTo} title=" " />
-        <div className="p-4">
+        <ScreenHeader backTo={backTo} title=" " />
+        <ScreenBody className="py-4">
           <CardListSkeleton count={2} />
-        </div>
+        </ScreenBody>
       </>
     )
   }
@@ -39,7 +40,7 @@ export function OutcomePage() {
   if (isNotFoundError(visit.error) || (visit.data && !device)) {
     return (
       <>
-        <PhoneHeader backTo={ROUTES.visits} title=" " />
+        <ScreenHeader backTo={ROUTES.visits} title=" " />
         <VisitNotFound />
       </>
     )
@@ -47,7 +48,7 @@ export function OutcomePage() {
   if (visit.isError || parts.isError || results.isError || !device) {
     return (
       <>
-        <PhoneHeader backTo={backTo} title=" " />
+        <ScreenHeader backTo={backTo} title=" " />
         <ErrorState
           error={visit.error ?? parts.error ?? results.error}
           onRetry={() => {
@@ -69,7 +70,7 @@ export function OutcomePage() {
 
   return (
     <>
-      <PhoneHeader
+      <ScreenHeader
         backTo={backTo}
         title={
           <h1 className="text-center font-narrow text-[13px] font-bold tracking-normal text-paper-bright normal-case">
@@ -82,7 +83,7 @@ export function OutcomePage() {
           </span>
         }
       />
-      <div className="p-4">
+      <ScreenBody className="py-4 md:py-6">
         {visit.data.allowedActions.includes("RECORD_WORK_RESULT") ? (
           <OutcomeForm
             visitId={visitId}
@@ -96,7 +97,7 @@ export function OutcomePage() {
             finished they stay as they were.
           </HatchedNote>
         )}
-      </div>
+      </ScreenBody>
     </>
   )
 }

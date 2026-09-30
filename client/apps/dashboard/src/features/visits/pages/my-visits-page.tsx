@@ -7,7 +7,8 @@ import { CardListSkeleton } from "@/components/states/skeletons"
 import { useCurrentUser } from "@/features/auth"
 import { StaffUserMenu } from "@/features/shell"
 import { VisitCard } from "@/features/visits/components/list/visit-card"
-import { PhoneHeader } from "@/features/visits/components/shared/phone-header"
+import { ScreenBody } from "@/features/visits/components/shared/screen-body"
+import { ScreenHeader } from "@/features/visits/components/shared/screen-header"
 import {
   VISITS_EMPTY,
   VISITS_TABS,
@@ -22,6 +23,9 @@ import type { VisitListItem } from "@/features/visits/types/visit.types"
 function isTab(value: string | null): value is VisitsTab {
   return value === "today" || value === "upcoming" || value === "done"
 }
+
+// One column on a phone; from `lg` the cards sit side by side.
+const VISIT_GRID = "grid gap-2.5 lg:grid-cols-2 xl:grid-cols-3"
 
 /** The one to feature: the visit he is on, else the next one still to start. */
 function featuredVisit(visits: VisitListItem[]) {
@@ -53,13 +57,15 @@ export function MyVisitsPage() {
 
   return (
     <>
-      <PhoneHeader
+      <ScreenHeader
+        width="wide"
         title={
-          <h1 className="text-[13px] font-bold text-paper-bright">
-            My visits
-          </h1>
+          <h1 className="text-[13px] font-bold text-paper-bright">My visits</h1>
         }
-        aside={user ? <StaffUserMenu user={user} /> : null}
+        // From `md` the account menu lives in the sidebar.
+        aside={
+          user ? <StaffUserMenu user={user} className="md:hidden" /> : null
+        }
       >
         <Tabs
           value={tab}
@@ -70,7 +76,7 @@ export function MyVisitsPage() {
           }
           className="mt-3.5"
         >
-          <TabsList className="h-auto w-full gap-[3px] rounded-[5px] bg-paper/8 p-[3px]">
+          <TabsList className="h-auto w-full gap-[3px] rounded-[5px] bg-paper/8 p-[3px] md:max-w-[420px]">
             {VISITS_TABS.map((item) => {
               const total = queries[item.value].data?.meta.total
               return (
@@ -88,11 +94,11 @@ export function MyVisitsPage() {
             })}
           </TabsList>
         </Tabs>
-      </PhoneHeader>
+      </ScreenHeader>
 
-      <div className="flex flex-1 flex-col gap-2.5 px-4 py-3.5">
+      <ScreenBody width="wide" className="flex flex-1 flex-col py-3.5 md:py-5">
         {current.isPending ? (
-          <CardListSkeleton />
+          <CardListSkeleton className={VISIT_GRID} />
         ) : current.isError ? (
           <ErrorState
             error={current.error}
@@ -101,7 +107,7 @@ export function MyVisitsPage() {
         ) : visits.length === 0 ? (
           <EmptyState {...VISITS_EMPTY[tab]} />
         ) : (
-          <>
+          <div className={VISIT_GRID}>
             {featured ? (
               <VisitCard
                 visit={featured.visit}
@@ -110,11 +116,15 @@ export function MyVisitsPage() {
               />
             ) : null}
             {rest.map((visit) => (
-              <VisitCard key={visit.id} visit={visit} showDate={tab !== "today"} />
+              <VisitCard
+                key={visit.id}
+                visit={visit}
+                showDate={tab !== "today"}
+              />
             ))}
-          </>
+          </div>
         )}
-      </div>
+      </ScreenBody>
     </>
   )
 }

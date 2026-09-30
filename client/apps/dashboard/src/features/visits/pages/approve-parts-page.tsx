@@ -15,7 +15,8 @@ import { usePricing } from "@/features/settings"
 import { AgreedSummary } from "@/features/visits/components/approval/agreed-summary"
 import { DecisionButtons } from "@/features/visits/components/approval/decision-buttons"
 import { unitName } from "@/features/visits/lib/unit-name"
-import { PhoneHeader } from "@/features/visits/components/shared/phone-header"
+import { ScreenBody } from "@/features/visits/components/shared/screen-body"
+import { ScreenHeader } from "@/features/visits/components/shared/screen-header"
 import { VisitNotFound } from "@/features/visits/components/shared/visit-not-found"
 import { useDecideParts } from "@/features/visits/hooks/use-visit-mutations"
 import {
@@ -44,10 +45,10 @@ export function ApprovePartsPage() {
   if (visit.isPending || parts.isPending) {
     return (
       <>
-        <PhoneHeader backTo={backTo} title=" " />
-        <div className="p-4">
+        <ScreenHeader backTo={backTo} title=" " />
+        <ScreenBody className="py-4">
           <CardListSkeleton count={2} />
-        </div>
+        </ScreenBody>
       </>
     )
   }
@@ -56,7 +57,7 @@ export function ApprovePartsPage() {
   if (isNotFoundError(visit.error) || (visit.data && !device)) {
     return (
       <>
-        <PhoneHeader backTo={ROUTES.visits} title=" " />
+        <ScreenHeader backTo={ROUTES.visits} title=" " />
         <VisitNotFound />
       </>
     )
@@ -64,7 +65,7 @@ export function ApprovePartsPage() {
   if (visit.isError || parts.isError || !device) {
     return (
       <>
-        <PhoneHeader backTo={backTo} title=" " />
+        <ScreenHeader backTo={backTo} title=" " />
         <ErrorState
           error={visit.error ?? parts.error}
           onRetry={() => void parts.refetch()}
@@ -103,7 +104,7 @@ export function ApprovePartsPage() {
 
   return (
     <>
-      <PhoneHeader
+      <ScreenHeader
         backTo={backTo}
         title={
           <span className="block text-center font-narrow text-[13px] font-bold text-paper-bright">
@@ -132,9 +133,9 @@ export function ApprovePartsPage() {
             </p>
           </>
         ) : null}
-      </PhoneHeader>
+      </ScreenHeader>
 
-      <div className="flex flex-col gap-2.5 px-4 py-3.5">
+      <ScreenBody className="flex flex-col gap-2.5 py-3.5 md:py-5">
         {asking ? (
           <>
             {hasErrorCode(decide.error, API_ERROR_CODES.VERSION_CONFLICT) ||
@@ -213,7 +214,7 @@ export function ApprovePartsPage() {
             laborFeeMinor={pricing.data?.laborFeeMinor ?? null}
           />
         )}
-      </div>
+      </ScreenBody>
     </>
   )
 }

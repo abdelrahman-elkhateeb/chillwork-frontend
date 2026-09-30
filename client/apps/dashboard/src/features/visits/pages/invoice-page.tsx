@@ -12,7 +12,8 @@ import { API_ERROR_CODES } from "@/lib/api/api.constants"
 import { formatDate } from "@/lib/format/dates"
 import { BillCard } from "@/features/visits/components/invoice/bill-card"
 import { IssuedInvoice } from "@/features/visits/components/invoice/issued-invoice"
-import { PhoneHeader } from "@/features/visits/components/shared/phone-header"
+import { ScreenBody } from "@/features/visits/components/shared/screen-body"
+import { ScreenHeader } from "@/features/visits/components/shared/screen-header"
 import { VisitNotFound } from "@/features/visits/components/shared/visit-not-found"
 import { useIssueInvoice } from "@/features/visits/hooks/use-visit-mutations"
 import {
@@ -37,7 +38,7 @@ export function InvoicePage() {
   const backTo = pathTo(ROUTES.visit, { visitId })
 
   const header = (title: string) => (
-    <PhoneHeader
+    <ScreenHeader
       backTo={backTo}
       title={
         <h1 className="text-center font-narrow text-[13px] font-bold tracking-normal text-paper-bright normal-case">
@@ -59,7 +60,10 @@ export function InvoicePage() {
         {isNotFoundError(visit.error) ? (
           <VisitNotFound />
         ) : (
-          <ErrorState error={visit.error} onRetry={() => void visit.refetch()} />
+          <ErrorState
+            error={visit.error}
+            onRetry={() => void visit.refetch()}
+          />
         )}
       </>
     )
@@ -70,9 +74,9 @@ export function InvoicePage() {
     return (
       <>
         {header("Invoice issued")}
-        <div className="px-4 py-[22px]">
+        <ScreenBody className="py-[22px]">
           <IssuedInvoice invoice={invoice} />
-        </div>
+        </ScreenBody>
       </>
     )
   }
@@ -86,9 +90,9 @@ export function InvoicePage() {
     return (
       <>
         {header("Check the bill")}
-        <div className="p-4">
+        <ScreenBody className="py-4">
           <CardListSkeleton count={2} />
-        </div>
+        </ScreenBody>
       </>
     )
   }
@@ -101,12 +105,12 @@ export function InvoicePage() {
     return (
       <>
         {header("Check the bill")}
-        <div className="p-4">
+        <ScreenBody className="py-4">
           <HatchedNote title="Nothing to bill yet">
-            The bill is worked out once the visit has started and each unit
-            has an outcome.
+            The bill is worked out once the visit has started and each unit has
+            an outcome.
           </HatchedNote>
-        </div>
+        </ScreenBody>
       </>
     )
   }
@@ -131,7 +135,7 @@ export function InvoicePage() {
   return (
     <>
       {header(finished ? "Check the bill" : "The bill so far")}
-      <div className="px-4 py-[15px]">
+      <ScreenBody className="py-[15px] md:py-5">
         <div className="text-[15px] font-bold">{data.customer.name}</div>
         <div className="mt-0.5 font-narrow text-[12.5px] text-muted-foreground">
           {data.address} · {formatDate(data.startAt, data.timezone)}
@@ -142,8 +146,8 @@ export function InvoicePage() {
         </div>
 
         <div className="mt-3 rounded-[4px] border border-l-[3px] border-border border-l-primary bg-surface-sunken px-[13px] py-[11px] font-narrow text-[12.5px] leading-[1.5] text-muted-foreground">
-          Labour is charged once per unit you fixed — not once for the visit.
-          A unit you could not fix carries nothing at all.
+          Labour is charged once per unit you fixed — not once for the visit. A
+          unit you could not fix carries nothing at all.
         </div>
 
         {issue.isError ? (
@@ -155,7 +159,10 @@ export function InvoicePage() {
                   description:
                     "The shelf no longer has enough of a part on this bill. Nothing was issued and no stock was taken — call the office.",
                 }
-              : hasErrorCode(issue.error, API_ERROR_CODES.INVOICE_ALREADY_ISSUED)
+              : hasErrorCode(
+                    issue.error,
+                    API_ERROR_CODES.INVOICE_ALREADY_ISSUED
+                  )
                 ? {
                     title: "This visit is already invoiced",
                     description: "Someone issued it a moment ago.",
@@ -178,8 +185,8 @@ export function InvoicePage() {
               Issue this invoice
             </SubmitButton>
             <p className="mt-2.5 text-center font-narrow text-[12px] text-muted-foreground">
-              You cannot edit these numbers. If they are wrong, the outcome
-              was wrong.
+              You cannot edit these numbers. If they are wrong, the outcome was
+              wrong.
             </p>
           </>
         ) : (
@@ -188,7 +195,7 @@ export function InvoicePage() {
             visit, never one still running.
           </p>
         )}
-      </div>
+      </ScreenBody>
     </>
   )
 }

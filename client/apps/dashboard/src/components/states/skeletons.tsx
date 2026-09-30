@@ -72,9 +72,20 @@ export function DetailSkeleton({ className }: { className?: string }) {
 }
 
 /** A stack of card-shaped blocks, for the phone lists. */
-export function CardListSkeleton({ count = 3 }: { count?: number }) {
+export function CardListSkeleton({
+  count = 3,
+  className,
+}: {
+  count?: number
+  /** A list laid out as a grid passes the same grid, so nothing jumps. */
+  className?: string
+}) {
   return (
-    <div role="status" aria-label="Loading" className="flex flex-col gap-2.5">
+    <div
+      role="status"
+      aria-label="Loading"
+      className={cn("flex flex-col gap-2.5", className)}
+    >
       {Array.from({ length: count }, (_, index) => (
         <div
           key={index}

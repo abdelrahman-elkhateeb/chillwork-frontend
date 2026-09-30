@@ -3,7 +3,8 @@ import { Card } from "@workspace/ui/components/card"
 import { SubmitButton } from "@/components/form/submit-button"
 import { Eyebrow } from "@/components/layout/eyebrow"
 import { useCurrentUser, useLogout } from "@/features/auth"
-import { PhoneHeader } from "@/features/visits/components/shared/phone-header"
+import { ScreenBody } from "@/features/visits/components/shared/screen-body"
+import { ScreenHeader } from "@/features/visits/components/shared/screen-header"
 
 /** The "Me" tab: who is signed in, and signing out. */
 export function MePage() {
@@ -16,12 +17,10 @@ export function MePage() {
 
   return (
     <>
-      <PhoneHeader
-        title={
-          <h1 className="text-[13px] font-bold text-paper-bright">Me</h1>
-        }
+      <ScreenHeader
+        title={<h1 className="text-[13px] font-bold text-paper-bright">Me</h1>}
       />
-      <div className="flex flex-col gap-3.5 p-4">
+      <ScreenBody className="flex flex-col gap-3.5 py-4 md:py-6">
         <Card className="gap-0 rounded-[6px] px-[15px] py-3.5">
           <div className="text-[17px] font-bold">{user.name}</div>
           <Eyebrow className="mt-3">Work email</Eyebrow>
@@ -43,7 +42,7 @@ export function MePage() {
         >
           Sign out
         </SubmitButton>
-      </div>
+      </ScreenBody>
     </>
   )
 }

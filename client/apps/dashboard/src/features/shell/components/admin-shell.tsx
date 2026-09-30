@@ -7,6 +7,7 @@ import { BrandLogo } from "@/components/brand/brand-logo"
 import { useCurrentUser } from "@/features/auth"
 import { useCompanySettings } from "@/features/settings"
 import { AdminNavLinks } from "@/features/shell/components/admin-nav-links"
+import { ShellSidebar } from "@/features/shell/components/shell-sidebar"
 import { StaffUserMenu } from "@/features/shell/components/staff-user-menu"
 import { ADMIN_NAV } from "@/features/shell/constants/admin-nav.constants"
 import { useAdminCounts } from "@/features/shell/hooks/use-admin-counts"
@@ -41,22 +42,9 @@ export function AdminShell() {
 
   return (
     <div className="flex min-h-svh bg-background text-foreground">
-      <aside className="sticky top-0 hidden h-svh w-[196px] shrink-0 flex-col bg-ink py-[18px] md:flex">
-        <div className="px-4 pb-3.5">
-          <BrandLogo size="sm" />
-        </div>
-        <div className="border-b border-paper/10 px-4 pb-3.5">
-          <div className="truncate font-narrow text-[12px] font-bold tracking-[0.1em] text-paper/40 uppercase">
-            {settings.data?.name ?? " "}
-          </div>
-        </div>
-        <div className="flex-1 overflow-y-auto px-2.5 py-3">
-          <AdminNavLinks counts={navCounts} />
-        </div>
-        <div className="border-t border-paper/10 px-3 pt-3">
-          <StaffUserMenu user={user} withName className="w-full" />
-        </div>
-      </aside>
+      <ShellSidebar user={user} label={settings.data?.name ?? " "}>
+        <AdminNavLinks counts={navCounts} />
+      </ShellSidebar>
 
       <div className="flex min-w-0 flex-1 flex-col">
         <header className="bg-ink md:hidden">

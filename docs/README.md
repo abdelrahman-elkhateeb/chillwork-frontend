@@ -2,6 +2,8 @@
 
 The customer-facing web app for ChillWork: a marketing landing page, login/signup, and a signed-in account page. It talks to the `fs-api` backend over a same-origin `/api` proxy.
 
+**How it should look:** [design-system.md](design-system.md) — tokens, type, components, status chips, hatching, the three shells and the copy rules. If a screen disagrees with it, the design system is right.
+
 - [Tech stack](#tech-stack)
 - [Getting started](#getting-started)
 - [Repository layout](#repository-layout)
@@ -326,6 +328,15 @@ Use `noValidate` on `<form>` — validation is zod's job.
 ---
 
 ## UI package and styling
+
+The rules every component follows (one orange per screen, graphite text on orange, hatching only for blocked/excluded, 48px technician targets…) live in [design-system.md](design-system.md). Read it before building a screen.
+
+### Dashboard shells
+
+The staff dashboard (`client/apps/dashboard`) has two role layouts in `features/shell`. Both share `ShellSidebar`, the ink sidebar shown from `md` (768px) up:
+
+- **Admin** — sidebar with live counts; below `md` it folds into the ink top bar's menu.
+- **Technician** — 390 first: one column and a bottom tab bar on a phone. From `md` the tabs move into the sidebar and each screen widens. Screens are built from `ScreenHeader` + `ScreenBody` (`features/visits/components/shared`), which share a `width`: `narrow` (forms, the customer's approval, the bill) or `wide` (the visits list, the visit, the parts picker — these go to two columns from `lg`).
 
 ### `@workspace/ui`
 

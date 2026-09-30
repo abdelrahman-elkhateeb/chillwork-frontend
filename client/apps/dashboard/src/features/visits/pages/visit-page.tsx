@@ -8,7 +8,8 @@ import { ROUTES } from "@/config/routes"
 import { isNotFoundError } from "@/lib/api/api-error"
 import { UnitCard } from "@/features/visits/components/detail/unit-card"
 import { VisitActions } from "@/features/visits/components/detail/visit-actions"
-import { PhoneHeader } from "@/features/visits/components/shared/phone-header"
+import { ScreenBody } from "@/features/visits/components/shared/screen-body"
+import { ScreenHeader } from "@/features/visits/components/shared/screen-header"
 import { VisitNotFound } from "@/features/visits/components/shared/visit-not-found"
 import { VISIT_STATUS_LABELS } from "@/features/visits/constants/visit-copy.constants"
 import {
@@ -29,10 +30,10 @@ export function VisitPage() {
   if (visit.isPending) {
     return (
       <>
-        <PhoneHeader backTo={ROUTES.visits} title=" " />
-        <div className="p-4">
+        <ScreenHeader backTo={ROUTES.visits} title=" " width="wide" />
+        <ScreenBody width="wide" className="py-4">
           <CardListSkeleton count={2} />
-        </div>
+        </ScreenBody>
       </>
     )
   }
@@ -40,7 +41,7 @@ export function VisitPage() {
   if (visit.isError) {
     return (
       <>
-        <PhoneHeader backTo={ROUTES.visits} title=" " />
+        <ScreenHeader backTo={ROUTES.visits} title=" " width="wide" />
         {isNotFoundError(visit.error) ? (
           <VisitNotFound />
         ) : (
@@ -68,8 +69,9 @@ export function VisitPage() {
 
   return (
     <>
-      <PhoneHeader
+      <ScreenHeader
         backTo={ROUTES.visits}
+        width="wide"
         title={
           <h1 className="text-center font-mono text-[14px] font-semibold tracking-normal text-paper-bright normal-case">
             {data.requestReference ?? "Visit"}
@@ -81,45 +83,53 @@ export function VisitPage() {
           </span>
         }
       >
-        <div className="mt-[11px] text-[16px] font-bold text-paper-bright">
-          {data.customer.name ?? "Customer"}
-        </div>
-        <div className="mt-[3px] font-narrow text-[13px] leading-[1.4] text-paper/55">
-          {data.address}
-        </div>
-        <div className="mt-3 flex gap-[7px]">
-          {data.customer.phone ? (
-            <Button
-              asChild
-              variant="inverse"
-              className="h-[42px] flex-1 rounded-[5px] border-paper/22 text-[13.5px] font-semibold"
-            >
-              <a href={`tel:${data.customer.phone}`}>
-                <PhoneIcon />
-                Call
-              </a>
-            </Button>
-          ) : null}
-          {data.address ? (
-            <Button
-              asChild
-              variant="inverse"
-              className="h-[42px] flex-1 rounded-[5px] border-paper/22 text-[13.5px] font-semibold"
-            >
-              <a
-                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(data.address)}`}
-                target="_blank"
-                rel="noreferrer"
+        <div className="lg:flex lg:items-end lg:justify-between lg:gap-6">
+          <div className="min-w-0">
+            <div className="mt-[11px] text-[16px] font-bold text-paper-bright">
+              {data.customer.name ?? "Customer"}
+            </div>
+            <div className="mt-[3px] font-narrow text-[13px] leading-[1.4] text-paper/55">
+              {data.address}
+            </div>
+          </div>
+          <div className="mt-3 flex gap-[7px] lg:w-[340px] lg:shrink-0">
+            {data.customer.phone ? (
+              <Button
+                asChild
+                variant="inverse"
+                className="h-[42px] flex-1 rounded-[5px] border-paper/22 text-[13.5px] font-semibold"
               >
-                <MapPinIcon />
-                Directions
-              </a>
-            </Button>
-          ) : null}
+                <a href={`tel:${data.customer.phone}`}>
+                  <PhoneIcon />
+                  Call
+                </a>
+              </Button>
+            ) : null}
+            {data.address ? (
+              <Button
+                asChild
+                variant="inverse"
+                className="h-[42px] flex-1 rounded-[5px] border-paper/22 text-[13.5px] font-semibold"
+              >
+                <a
+                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(data.address)}`}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <MapPinIcon />
+                  Directions
+                </a>
+              </Button>
+            ) : null}
+          </div>
         </div>
-      </PhoneHeader>
+      </ScreenHeader>
 
-      <div className="px-4 py-[13px]">
+      {/* From `lg` the actions sit beside the units instead of under them. */}
+      <ScreenBody
+        width="wide"
+        className="py-[13px] md:py-5 lg:grid lg:grid-cols-[minmax(0,1fr)_340px] lg:items-start lg:gap-6"
+      >
         <div className="flex flex-col gap-[9px]">
           {data.devices.map((device) => (
             <UnitCard
@@ -132,8 +142,12 @@ export function VisitPage() {
           ))}
         </div>
 
-        <VisitActions visit={data} unitsWithoutOutcome={unitsWithoutOutcome} />
-      </div>
+        <VisitActions
+          visit={data}
+          unitsWithoutOutcome={unitsWithoutOutcome}
+          className="lg:mt-0"
+        />
+      </ScreenBody>
     </>
   )
 }
