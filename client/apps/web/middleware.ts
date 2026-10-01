@@ -1,3 +1,5 @@
+/// <reference types="node" />
+// Vercel type-checks this file with tsconfig.json, which has no Node types.
 import { rewrite } from "@vercel/functions"
 
 // Vercel Routing Middleware: the production twin of the Vite dev proxy.
