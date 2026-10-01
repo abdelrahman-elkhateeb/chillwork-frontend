@@ -204,8 +204,10 @@ Lives in `src/lib/api/`.
 
 `API_BASE_URL` is `/api/v1` — always a relative path. The API's auth cookies are **HttpOnly with no `Domain`**, and its CSRF guard compares `Origin` to the request's own `Host`. So:
 
-- **Dev:** Vite proxies `/api` → `API_PROXY_TARGET` with `changeOrigin: false`. Do **not** turn `changeOrigin` on — every POST would fail with `403 CSRF_ORIGIN_REJECTED`.
-- **Production:** the host must proxy `/api` to the backend the same way (same origin, `Host` preserved).
+Both environments read the backend URL from `API_PROXY_TARGET`:
+
+- **Dev:** Vite proxies `/api` → `API_PROXY_TARGET` (from the app's `.env`, default `http://localhost:3000`). A local API gets the request untouched. A hosted one (Vercel routes by `Host`) gets its own `Host`, and the proxy swaps `Origin` to match so the API's CSRF guard still passes.
+- **Production (Vercel):** `middleware.ts` rewrites `/api/*` → `API_PROXY_TARGET` (set it in the Vercel project's env vars), and `vercel.json` sends every other path to `index.html`. The API sees this site as the `Origin`, so the backend's `AUTH_ALLOWED_ORIGINS` must list the site's URL.
 
 ### Response envelope
 
