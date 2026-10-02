@@ -27,7 +27,7 @@ export const DISPATCHER_MOCKUP = {
     label: "Out today",
     value: "9",
     caption: "visits scheduled",
-    risk: "2 at risk",
+    risk: "3 on site now",
   },
   columns: [
     "Request",
@@ -45,9 +45,8 @@ export const DISPATCHER_SIDEBAR: readonly SidebarItem[] = [
   { label: "Requests", count: "14", alert: true, active: true },
   { label: "Day board", count: "9" },
   { label: "Technicians", count: "6" },
-  { label: "Parts & stock", count: "3 low", alert: true, mono: true },
+  { label: "Parts & stock", count: "1 out", alert: true, mono: true },
   { label: "Invoices", count: "22" },
-  { label: "Escalations", count: "2", alert: true },
 ]
 
 export const CITY_PINS: readonly CityPin[] = [
@@ -64,9 +63,9 @@ export const REQUEST_ROWS: readonly RequestRow[] = [
     customer: "Nadia Farouk",
     area: "Maadi",
     units: 2,
-    reading: "Start capacitor —",
-    readingNote: { text: "2 parts in stock", kind: "in-stock" },
-    status: "in-triage",
+    reading: "Likely start capacitor —",
+    readingNote: "3 questions for site",
+    status: "needs-visit",
     technician: "—",
     highlighted: true,
   },
@@ -76,7 +75,6 @@ export const REQUEST_ROWS: readonly RequestRow[] = [
     area: "Nasr City",
     units: 1,
     reading: "Compressor overheating",
-    readingNote: { text: "Part out of stock", kind: "out-of-stock" },
     status: "scheduled",
     technician: "Hana S.",
   },
@@ -103,26 +101,27 @@ export const REQUEST_ROWS: readonly RequestRow[] = [
     customer: "Omar Shafik",
     area: "Heliopolis",
     units: 1,
-    reading: "Returned fault — second visit, same unit",
-    status: "escalated",
+    reading: "Reading unavailable —",
+    readingNote: "triaged by hand",
+    status: "partly-repaired",
     technician: "Youssef M.",
   },
 ]
 
 export const DECISIONS: readonly Decision[] = [
   {
-    title: "Second visit, same unit",
-    body: "REQ-2476 — fault returned after 9 days.",
+    title: "Unit not repaired",
+    body: "REQ-2476 — part unavailable. Nothing billed for it.",
     tone: "danger",
   },
   {
-    title: "Van will arrive short",
-    body: "REQ-2480 needs COMP-2T — none on the shelf.",
+    title: "Out of stock",
+    body: "COMP-2T — none on the shelf.",
     tone: "danger",
   },
   {
-    title: "Unassigned past noon",
-    body: "6 requests still without a technician.",
+    title: "Waiting for a visit",
+    body: "6 requests have a unit with no visit booked.",
     tone: "info",
   },
 ]

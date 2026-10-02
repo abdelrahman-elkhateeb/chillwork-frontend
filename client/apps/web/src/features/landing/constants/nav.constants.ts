@@ -9,7 +9,7 @@ export const SECTION_IDS = {
   handles: "what-it-handles",
   billing: "billing",
   leaks: "leaks",
-  demo: "demo",
+  contact: "contact",
 } as const
 
 export const NAV_LINKS: readonly NavLink[] = [
@@ -18,8 +18,6 @@ export const NAV_LINKS: readonly NavLink[] = [
   { label: "AI triage", href: `#${SECTION_IDS.triage}` },
   { label: "What it handles", href: `#${SECTION_IDS.handles}` },
 ]
-
-export const DEMO_HREF = `#${SECTION_IDS.demo}`
 
 /** Keeps anchored sections clear of the sticky nav (58px / 74px tall). */
 export const SECTION_SCROLL_OFFSET = "scroll-mt-[58px] md:scroll-mt-[74px]"

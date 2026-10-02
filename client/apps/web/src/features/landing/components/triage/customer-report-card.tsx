@@ -3,25 +3,7 @@ import { Separator } from "@workspace/ui/components/separator"
 
 import { CUSTOMER_REPORT } from "@/features/landing/constants/triage.constants"
 
-function PhotoTile() {
-  return (
-    <span className="flex h-[50px] items-center justify-center rounded-[4px] border border-paper/20">
-      <svg
-        viewBox="0 0 18 13"
-        aria-hidden="true"
-        fill="none"
-        className="h-[13px] w-[18px] stroke-paper/45"
-        strokeWidth="1.3"
-      >
-        <rect x="0.65" y="2.15" width="16.7" height="10.2" rx="1" />
-        <circle cx="9" cy="7.25" r="3" />
-        <path d="M6 2.15 l1 -1.5 h4 l1 1.5" />
-      </svg>
-    </span>
-  )
-}
-
-/** What the customer actually said and sent, kept verbatim. */
+/** What the customer actually said, kept verbatim. */
 export function CustomerReportCard() {
   return (
     <Card className="block border-paper/15 bg-transparent p-5 text-inherit">
@@ -32,14 +14,16 @@ export function CustomerReportCard() {
         {CUSTOMER_REPORT.quote}
       </blockquote>
 
-      <div className="mt-4 grid grid-cols-4 gap-1.5">
-        {Array.from({ length: CUSTOMER_REPORT.photoCount }, (_, index) => (
-          <PhotoTile key={index} />
+      <ul className="mt-4 flex flex-col gap-1.5">
+        {CUSTOMER_REPORT.units.map((unit) => (
+          <li
+            key={unit}
+            className="rounded-[4px] border border-paper/20 px-3 py-2 font-mono text-[12px] text-paper/70"
+          >
+            {unit}
+          </li>
         ))}
-      </div>
-      <p className="mt-2.5 text-[12.5px] text-paper/45">
-        {CUSTOMER_REPORT.photoNote}
-      </p>
+      </ul>
 
       <Separator className="mt-4 bg-paper/12" />
       <div className="pt-4">

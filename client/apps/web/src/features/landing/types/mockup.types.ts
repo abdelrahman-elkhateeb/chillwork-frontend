@@ -22,7 +22,7 @@ export type CityPin = {
 }
 
 export type RequestStatus =
-  "in-triage" | "scheduled" | "on-site" | "invoiced" | "escalated"
+  "needs-visit" | "scheduled" | "on-site" | "invoiced" | "partly-repaired"
 
 export type RequestRow = {
   id: string
@@ -30,7 +30,8 @@ export type RequestRow = {
   area: string
   units: number
   reading: string
-  readingNote?: { text: string; kind: "in-stock" | "out-of-stock" }
+  /** Muted aside after the reading, e.g. how many questions to ask on site. */
+  readingNote?: string
   status: RequestStatus
   technician: string
   highlighted?: boolean
@@ -55,15 +56,13 @@ export type ScheduleRow = {
   slots: ScheduleSlot[]
 }
 
-export type InspectionCheck = {
-  label: string
-  done: boolean
-}
+export type PartDecision = "approved" | "rejected" | "proposed"
 
-export type PartChip = {
+/** A catalog part the technician proposed, and the customer's answer. */
+export type PartProposal = {
+  name: string
   code: string
-  note: string
-  available: boolean
+  decision: PartDecision
 }
 
 export type DeviceReading = {
@@ -72,7 +71,8 @@ export type DeviceReading = {
   model: string
   /** Rendered as: lead **emphasis** rest */
   finding: { lead: string; emphasis: string; rest: string }
-  parts: PartChip[]
+  /** Possible causes, most likely first. */
+  causes: string[]
 }
 
 export type TriageFact = {

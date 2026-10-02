@@ -5,7 +5,7 @@ import { CUSTOMER_PREVIEW } from "@/features/landing/constants/apps.constants"
 
 const CARD = "rounded-[6px] border-secondary px-3.5"
 
-/** The customer's request tracker: status, agreed price, report. */
+/** The customer's request tracker: visit, per-unit progress, timeline. */
 export function CustomerPreview() {
   return (
     <div className="flex flex-col gap-[9px]">
@@ -34,8 +34,8 @@ export function CustomerPreview() {
           <span className="text-[13px] text-ink">{row.label}</span>
           <span
             className={
-              row.kind === "amount"
-                ? "font-mono text-[12.5px] text-ink"
+              row.kind === "status"
+                ? "font-narrow text-[11px] font-bold tracking-[0.08em] text-[#145A75] uppercase"
                 : "text-[13px] font-semibold text-primary-deep"
             }
           >

@@ -13,7 +13,6 @@ import { ROUTES } from "@/config/routes"
 import { useCurrentUser, UserMenu } from "@/features/auth"
 import { LandingContainer } from "@/features/landing/components/shared/landing-container"
 import {
-  DEMO_HREF,
   NAV_LINKS,
   SECTION_IDS,
 } from "@/features/landing/constants/nav.constants"
@@ -82,21 +81,12 @@ export function NavBar() {
           <div className="flex items-center gap-3.5">
             {user ? <UserMenu user={user} /> : null}
             {isGuest ? (
-              <div className="hidden items-center gap-3.5 md:flex">
-                <Link
-                  to={ROUTES.login}
-                  className="px-0.5 py-[9px] text-[14px] font-medium text-paper/70 transition-colors hover:text-paper"
-                >
-                  Sign in
-                </Link>
-                <Button
-                  asChild
-                  size="lg"
-                  className="h-auto px-5 py-[11px] text-[14px] font-semibold"
-                >
-                  <a href={DEMO_HREF}>Book a demo</a>
-                </Button>
-              </div>
+              <Link
+                to={ROUTES.login}
+                className="hidden px-0.5 py-[9px] text-[14px] font-medium text-paper/70 transition-colors hover:text-paper md:block"
+              >
+                Sign in
+              </Link>
             ) : null}
 
             <CollapsibleTrigger asChild>
@@ -125,20 +115,13 @@ export function NavBar() {
               </a>
             ))}
             {isGuest ? (
-              <>
-                <Link
-                  to={ROUTES.login}
-                  onClick={close}
-                  className="py-3.5 text-[15px] font-medium text-paper/80"
-                >
-                  Sign in
-                </Link>
-                <Button asChild size="xl" className="my-2">
-                  <a href={DEMO_HREF} onClick={close}>
-                    Book a demo
-                  </a>
-                </Button>
-              </>
+              <Link
+                to={ROUTES.login}
+                onClick={close}
+                className="py-3.5 text-[15px] font-medium text-paper/80"
+              >
+                Sign in
+              </Link>
             ) : null}
           </LandingContainer>
         </CollapsibleContent>

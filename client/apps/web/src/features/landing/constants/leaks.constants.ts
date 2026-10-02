@@ -11,9 +11,9 @@ export const LEAK_CARDS: readonly LeakCard[] = [
   {
     icon: "second-visit",
     title: "The second visit you did for free",
-    body: "He went out without the right part because nobody read the photos before sending him. Fuel, two hours, and a customer who now doubts you.",
+    body: "He went out without the right part because nobody read the request before sending him. Fuel, two hours, and a customer who now doubts you.",
     mobileBody:
-      "He went out without the right part because nobody read the photos first. Fuel, two hours, and a customer who now doubts you.",
+      "He went out without the right part because nobody read the request first. Fuel, two hours, and a customer who now doubts you.",
   },
   {
     icon: "double-booking",

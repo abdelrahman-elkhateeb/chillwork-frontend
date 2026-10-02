@@ -1,6 +1,6 @@
 import type { AppRole } from "@/features/landing/types/landing.types"
 import type {
-  InspectionCheck,
+  PartProposal,
   ScheduleRow,
 } from "@/features/landing/types/mockup.types"
 
@@ -17,32 +17,32 @@ export const APP_ROLES: readonly AppRole[] = [
     role: "Customer",
     title: "Report & follow",
     summary:
-      "Photos on intake, live status, the price they agreed, what was done to each unit, and the invoice.",
+      "Each unit described in their own words, a live timeline of every visit, the outcome per unit, and the invoice.",
   },
   {
     id: "dispatcher",
     role: "Dispatcher & admin",
     title: "Triage & assign",
     summary:
-      "The whole queue and the whole day. Conflicts are refused at save, stock is visible, escalations surface on their own.",
+      "The whole queue with its AI readings, every technician's day, parts, stock and your labor fee. Conflicts are refused at save.",
   },
   {
     id: "technician",
     role: "Technician",
     title: "Inspect & close",
     summary:
-      "Designed at 390px first. Findings save per check, so a two-hour visit is never one long form he loses at the end.",
+      "Designed at 390px first. Parts proposed and decided per unit, results saved as he goes, invoice issued before he leaves.",
   },
 ]
 
 export const CUSTOMER_PREVIEW = {
   request: "REQ-2481",
-  status: "On the way",
+  status: "Scheduled",
   visit: "Mostafa K. · 10:00–12:00",
   units: "2 units · Maadi",
   rows: [
-    { label: "Agreed price", value: "[AMOUNT]", kind: "amount" },
-    { label: "Service report", value: "Open", kind: "link" },
+    { label: "Bedroom split", value: "Scheduled", kind: "status" },
+    { label: "Timeline", value: "Open", kind: "link" },
   ],
 } as const
 
@@ -82,14 +82,11 @@ export const DISPATCHER_PREVIEW = {
 export const TECHNICIAN_PREVIEW = {
   visit: "VIS-3390",
   customer: "Nadia Farouk · Maadi",
-  checklist: "DEV-01 checks",
-  totalChecks: 6,
-  checks: [
-    { label: "Capacitor reading out of range", done: true },
-    { label: "Contactor pitted, replaced", done: true },
-    { label: "Gas pressure check", done: false },
-  ] satisfies InspectionCheck[],
-  /** Checks done so far, including ones scrolled out of view. */
-  completed: 4,
-  action: "Show the price",
+  device: "DEV-01 parts",
+  proposals: [
+    { name: "Start capacitor", code: "CAP-45/5", decision: "approved" },
+    { name: "Contactor", code: "CONT-30A", decision: "rejected" },
+    { name: "Fan motor", code: "FAN-1T", decision: "proposed" },
+  ] satisfies PartProposal[],
+  action: "Record the customer's answer",
 } as const

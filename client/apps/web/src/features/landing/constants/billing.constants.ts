@@ -7,12 +7,12 @@ import type {
 /** Lettered to match the markers on the capacitor drawing. */
 export const BILLING_CALLOUTS: readonly BillingCallout[] = [
   {
-    title: "A — He scans it in",
-    body: "Picked from your own catalog at your own price. Not typed, not guessed.",
+    title: "A — He picks it, she approves it",
+    body: "From your own catalog at your own price, and only billed once the customer says yes.",
   },
   {
     title: "B — Stock comes down",
-    body: "One less on the shelf the moment he fits it. You find out you are low before a customer does.",
+    body: "Issuing the invoice takes it off the shelf, with the move written to the stock ledger.",
   },
 ]
 
@@ -23,26 +23,26 @@ export const CAPACITOR_CALLOUTS: readonly DrawingCallout[] = [
 
 export const INVOICE = {
   number: "INV-1177",
-  status: "Paid",
+  status: "Issued",
   total: "[AMOUNT]",
   lines: [
     {
-      title: "Call-out and labour",
-      detail: "Your fixed rate, set once",
-      mobileDetail: "Your fixed rate",
+      title: "Labor fee",
+      detail: "DEV-01 · your fixed rate, once per repaired unit",
+      mobileDetail: "DEV-01 · once per repaired unit",
       amount: "[AMOUNT]",
     },
     {
       title: "Start capacitor",
       code: "CAP-45/5",
-      detail: "DEV-01 · 1 × catalog price",
+      detail: "DEV-01 · approved · 1 × catalog price",
       mobileDetail: "DEV-01",
       amount: "[AMOUNT]",
     },
     {
       title: "DEV-02 — drain repair",
-      detail: "Not completed — cannot be charged for. Follow-up opened.",
-      mobileDetail: "Not completed — follow-up opened.",
+      detail: "Not repaired — part unavailable. Costs nothing.",
+      mobileDetail: "Not repaired — costs nothing.",
       amount: "—",
       excluded: true,
     },

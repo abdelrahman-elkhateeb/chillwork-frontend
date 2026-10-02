@@ -8,11 +8,11 @@ import { Hero } from "@/features/landing/components/sections/hero"
 import { JobSteps } from "@/features/landing/components/sections/job-steps"
 import { Leaks } from "@/features/landing/components/sections/leaks"
 import { NavBar } from "@/features/landing/components/sections/nav-bar"
+import { PhotoFeature } from "@/features/landing/components/sections/photo-feature"
 import { ThreeApps } from "@/features/landing/components/sections/three-apps"
-import { PhotoBand } from "@/features/landing/components/shared/photo-band"
 import {
-  PHOTO_CLOSE_UP,
-  PHOTO_ON_SITE,
+  ON_SITE_FEATURE,
+  PER_UNIT_FEATURE,
 } from "@/features/landing/constants/photos.constants"
 
 export function LandingPage() {
@@ -21,20 +21,18 @@ export function LandingPage() {
       <NavBar />
       <main>
         <Hero />
-        <PhotoBand
-          photo={PHOTO_ON_SITE}
-          heightClassName="h-[300px] md:h-[420px]"
-        />
         <DeviceStrip />
+        <PhotoFeature content={ON_SITE_FEATURE} />
         <JobSteps />
         <ThreeApps />
         <AiTriage />
         <Capabilities />
         <Billing />
         <Leaks />
-        <PhotoBand
-          photo={PHOTO_CLOSE_UP}
-          heightClassName="h-[260px] md:h-[360px]"
+        <PhotoFeature
+          content={PER_UNIT_FEATURE}
+          reverse
+          className="bg-surface-sunken"
         />
         <Cta />
       </main>

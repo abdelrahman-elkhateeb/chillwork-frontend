@@ -8,7 +8,7 @@ import {
 
 export function Cta() {
   return (
-    <section id={SECTION_IDS.demo} className={SECTION_SCROLL_OFFSET}>
+    <section id={SECTION_IDS.contact} className={SECTION_SCROLL_OFFSET}>
       <LandingContainer className="flex flex-col gap-[22px] pt-1 pb-9 md:py-20 lg:flex-row lg:items-center lg:justify-between lg:gap-14">
         <div>
           <h2 className="max-w-[740px] text-[30px] leading-[1.08] font-bold tracking-[-0.028em] text-ink md:text-[42px] md:leading-[1.05]">
@@ -28,19 +28,8 @@ export function Cta() {
 
         <div className="flex w-full flex-col gap-2.5 lg:w-[300px] lg:shrink-0">
           <Button asChild size="xl" className="h-[54px] px-0">
-            <a href="#book">Book a demo</a>
+            <a href={`#${SECTION_IDS.contact}`}>Call us</a>
           </Button>
-          <Button
-            asChild
-            variant="outline"
-            size="xl"
-            className="h-[54px] px-0 text-ink"
-          >
-            <a href="#contact">Call us instead</a>
-          </Button>
-          <p className="mt-0.5 text-center text-[12.5px] text-muted-foreground md:mt-1">
-            No card, no trial clock.
-          </p>
         </div>
       </LandingContainer>
     </section>

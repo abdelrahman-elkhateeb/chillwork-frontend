@@ -4,10 +4,7 @@ import { DispatcherMockup } from "@/features/landing/components/mockups/dispatch
 import { LandingContainer } from "@/features/landing/components/shared/landing-container"
 import { SectionEyebrow } from "@/features/landing/components/shared/section-eyebrow"
 import { HERO_STATS } from "@/features/landing/constants/hero.constants"
-import {
-  DEMO_HREF,
-  SECTION_IDS,
-} from "@/features/landing/constants/nav.constants"
+import { SECTION_IDS } from "@/features/landing/constants/nav.constants"
 
 export function Hero() {
   return (
@@ -25,21 +22,13 @@ export function Hero() {
             </h1>
 
             <p className="mt-4 max-w-[560px] text-[15.5px] leading-[1.56] text-paper/[0.68] md:mt-6 md:text-[16.5px] md:leading-[1.58]">
-              Intake, AI triage, conflict-free dispatch, per-device inspection,
-              parts and stock, work agreements, service reports and invoicing —
-              one system, three apps, every action attributed.
+              Intake, AI triage, conflict-free dispatch, customer-approved
+              parts, live stock and no-fix-no-fee invoicing — one system, three
+              apps, every change attributed.
             </p>
 
             <div className="mt-[22px] flex flex-col gap-2.5 md:mt-8 md:flex-row md:items-center md:gap-3">
-              <Button asChild size="xl" className="md:h-[50px]">
-                <a href={DEMO_HREF}>Book a demo</a>
-              </Button>
-              <Button
-                asChild
-                variant="inverse"
-                size="xl"
-                className="px-[26px] md:h-[50px]"
-              >
+              <Button asChild size="xl" className="px-[26px] md:h-[50px]">
                 <a href={`#${SECTION_IDS.handles}`}>
                   See everything it handles →
                 </a>

@@ -46,14 +46,10 @@ export function StepIllustration({ name }: Props) {
 
       {name === "intake" ? (
         <>
-          {/* phone with photo → request card + photo */}
+          {/* phone with a typed description → one card per unit */}
           <rect x="56" y="38.5" width="41" height="66.5" rx="5" stroke={INK} />
-          <rect
-            x="63.5"
-            y="47.5"
-            width="26"
-            height="39.5"
-            rx="3"
+          <path
+            d="M63.5 50 H89.5 M63.5 58 H89.5 M63.5 66 H82 M63.5 74 H86"
             stroke={MUTED}
             strokeWidth="1.4"
           />
@@ -73,18 +69,27 @@ export function StepIllustration({ name }: Props) {
             className="stroke-primary"
             strokeWidth="1.6"
           />
-          <rect x="116" y="82.5" width="41" height="22.5" rx="1" stroke={INK} />
-          <circle cx="130.5" cy="94" r="7" stroke={MUTED} strokeWidth="1.6" />
+          <rect x="116" y="82.5" width="41" height="22.5" rx="4" stroke={INK} />
+          <path d="M124 90.5 H149" stroke={MUTED} strokeWidth="1.4" />
+          <path d="M124 97.5 H141" stroke={MUTED} strokeWidth="1.4" />
         </>
       ) : null}
 
       {name === "triage" ? (
         <>
-          {/* photos → reading with parts */}
+          {/* the customer's words, per unit → reading with causes */}
           <rect x="58.5" y="36" width="35" height="26.5" rx="3" stroke={INK} />
-          <circle cx="76" cy="49.5" r="5" stroke={MUTED} strokeWidth="1.6" />
+          <path
+            d="M64.5 45 H87.5 M64.5 53 H80"
+            stroke={MUTED}
+            strokeWidth="1.4"
+          />
           <rect x="58.5" y="70" width="35" height="26.5" rx="3" stroke={INK} />
-          <circle cx="76" cy="83.5" r="5" stroke={MUTED} strokeWidth="1.6" />
+          <path
+            d="M64.5 79 H87.5 M64.5 87 H82"
+            stroke={MUTED}
+            strokeWidth="1.4"
+          />
           <path
             d="M98 66.5 H111 M107 62.5 L111 66.5 L107 70.5"
             className="stroke-primary"
@@ -161,7 +166,7 @@ export function StepIllustration({ name }: Props) {
 
       {name === "on-site" ? (
         <>
-          {/* part going into the unit, accepted estimate */}
+          {/* part going into the unit, approved by the customer */}
           <path d="M84.5 26 V32.5 M94.5 26 V32.5" className="stroke-primary" />
           <path
             d="M84 32.5 H95 A4 4 0 0 1 99 36.5 V54.5 A4 4 0 0 1 95 58.5 H93 L89.5 65 L86 58.5 H84 A4 4 0 0 1 80 54.5 V36.5 A4 4 0 0 1 84 32.5 Z"

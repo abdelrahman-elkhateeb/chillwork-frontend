@@ -1,4 +1,3 @@
-import { Badge } from "@workspace/ui/components/badge"
 import { cn } from "@workspace/ui/lib/utils"
 
 import { StatusBadge } from "@/features/landing/components/mockups/status-badge"
@@ -12,11 +11,11 @@ import type {
 } from "@/features/landing/types/mockup.types"
 
 const STATUS: Record<RequestStatus, { label: string; tone: StatusTone }> = {
-  "in-triage": { label: "In triage", tone: "progress" },
+  "needs-visit": { label: "Needs a visit", tone: "progress" },
   scheduled: { label: "Scheduled", tone: "info" },
   "on-site": { label: "On site", tone: "progress" },
   invoiced: { label: "Invoiced", tone: "success" },
-  escalated: { label: "Escalated", tone: "danger" },
+  "partly-repaired": { label: "Partial", tone: "danger" },
 }
 
 const COLUMNS = "grid-cols-[84px_132px_88px_48px_minmax(0,1fr)_100px_96px]"
@@ -56,16 +55,7 @@ export function RequestsTable() {
             <span className="flex min-w-0 items-center gap-1.5 truncate text-[13.5px] text-ink">
               {row.reading}
               {row.readingNote ? (
-                row.readingNote.kind === "in-stock" ? (
-                  <span className="text-[#17876A]">{row.readingNote.text}</span>
-                ) : (
-                  <Badge
-                    variant="blocked"
-                    className="rounded-[2px] px-1.5 py-0.5 leading-[normal]"
-                  >
-                    {row.readingNote.text}
-                  </Badge>
-                )
+                <span className="text-muted-foreground">{row.readingNote}</span>
               ) : null}
             </span>
             <span>

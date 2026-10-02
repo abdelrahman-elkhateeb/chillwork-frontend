@@ -83,3 +83,12 @@ export type LandingPhoto = {
   /** CSS object-position — which part of the photo survives the crop. */
   focus?: string
 }
+
+/** A photo set beside a short block of copy. */
+export type PhotoFeature = {
+  eyebrow: string
+  title: string
+  body: string
+  points: readonly string[]
+  photo: LandingPhoto
+}

@@ -26,7 +26,7 @@ export const FOOTER_COLUMNS: readonly FooterColumn[] = [
   {
     heading: "Company",
     links: [
-      { label: "Contact", href: "#contact" },
+      { label: "Contact", href: `#${SECTION_IDS.contact}` },
       { label: "Privacy", href: "#privacy" },
     ],
   },

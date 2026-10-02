@@ -1,13 +1,13 @@
+import { Badge } from "@workspace/ui/components/badge"
 import { Card, CardTitle } from "@workspace/ui/components/card"
 
-import { PartChip } from "@/features/landing/components/mockups/part-chip"
 import type { DeviceReading } from "@/features/landing/types/mockup.types"
 
 type Props = {
   reading: DeviceReading
 }
 
-/** The likely fault for one unit, with its parts checked against stock. */
+/** The likely fault for one unit, with its possible causes. */
 export function DeviceReadingCard({ reading }: Props) {
   return (
     <Card className="block rounded-[4px] border-l-[3px] border-secondary border-l-primary px-[15px] py-3.5">
@@ -25,11 +25,16 @@ export function DeviceReadingCard({ reading }: Props) {
         {reading.finding.lead} <strong>{reading.finding.emphasis}</strong>{" "}
         {reading.finding.rest}
       </p>
-      <div className="mt-2.5 flex flex-wrap gap-1.5">
-        {reading.parts.map((part) => (
-          <PartChip key={part.code} {...part} />
+      <ul
+        aria-label="Possible causes"
+        className="mt-2.5 flex flex-wrap gap-1.5"
+      >
+        {reading.causes.map((cause) => (
+          <li key={cause}>
+            <Badge variant="outline">{cause}</Badge>
+          </li>
         ))}
-      </div>
+      </ul>
     </Card>
   )
 }
