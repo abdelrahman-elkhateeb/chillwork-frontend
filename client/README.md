@@ -1,21 +1,16 @@
-# shadcn/ui monorepo template
+# ChillWork client workspace
 
-This is a Vite monorepo template with shadcn/ui.
+The customer site (`apps/web`), the admin and technician dashboard
+(`apps/dashboard`) and the shared UI package (`packages/ui`).
 
-## Adding components
+See the [project README](../README.md) for what ChillWork does and how to run
+it, and the [developer guide](../docs/README.md) for architecture and
+conventions.
 
-To add components to your app, run the following command at the root of your `web` app:
+To add a shadcn/ui component to the shared package:
 
 ```bash
 npx shadcn@latest add button -c apps/web
 ```
 
-This will place the ui components in the `packages/ui/src/components` directory.
-
-## Using components
-
-To use the components in your app, import them from the `ui` package.
-
-```tsx
-import { Button } from "@workspace/ui/components/button";
-```
+Then import it from `@workspace/ui/components/button`.
