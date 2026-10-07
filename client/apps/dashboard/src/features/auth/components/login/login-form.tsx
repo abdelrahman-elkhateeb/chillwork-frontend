@@ -57,6 +57,27 @@ export function LoginForm({ defaultEmail = "", notice, onSuccess }: Props) {
         description={LOGIN_COPY.description}
       />
 
+      <FormAlert
+        tone="info"
+        title={LOGIN_COPY.demoTitle}
+        description={
+          <ul className="m-0 list-none p-0 [overflow-wrap:anywhere]">
+            {LOGIN_COPY.demoAccounts.map(({ role, email }) => (
+              <li key={email}>
+                {role}: <span className="font-mono select-all">{email}</span>
+              </li>
+            ))}
+            <li>
+              Password (both):{" "}
+              <span className="font-mono select-all">
+                {LOGIN_COPY.demoPassword}
+              </span>
+            </li>
+          </ul>
+        }
+        className="mt-6"
+      />
+
       {alert ? <FormAlert {...alert} className="mt-6" /> : null}
 
       <form noValidate onSubmit={onSubmit} className="mt-7">

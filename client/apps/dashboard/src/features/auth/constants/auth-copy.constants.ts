@@ -15,6 +15,12 @@ export const LOGIN_COPY = {
   asideBody: "Dispatchers see the whole day. Technicians see their own.",
   asideFooter: "Customers don't sign in here.",
   asideFooterLink: "Customer login →",
+  demoTitle: "Demo accounts — try it yourself",
+  demoAccounts: [
+    { role: "Admin", email: "admin@chillwork.test" },
+    { role: "Technician", email: "tech@chillwork.test" },
+  ],
+  demoPassword: "jO8Uogyq_o3Wzz0R",
 } as const
 
 export const ACTIVATION_COPY = {
